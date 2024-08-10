@@ -10,15 +10,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Jeux_Olympiques.Areas.Identity.Data;
 
 namespace Jeux_Olympiques.Areas.Identity.Pages.Account
 {
     public class ConfirmEmailChangeModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<Jeux_OlympiquesUser> _userManager;
+        private readonly SignInManager<Jeux_OlympiquesUser> _signInManager;
 
-        public ConfirmEmailChangeModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public ConfirmEmailChangeModel(UserManager<Jeux_OlympiquesUser> userManager, SignInManager<Jeux_OlympiquesUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

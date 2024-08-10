@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using Jeux_Olympiques.Areas.Identity.Data;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -14,13 +15,13 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
 {
     public class LoginWithRecoveryCodeModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<Jeux_OlympiquesUser> _signInManager;
+        private readonly UserManager<Jeux_OlympiquesUser> _userManager;
         private readonly ILogger<LoginWithRecoveryCodeModel> _logger;
 
         public LoginWithRecoveryCodeModel(
-            SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager,
+            SignInManager<Jeux_OlympiquesUser> signInManager,
+            UserManager<Jeux_OlympiquesUser> userManager,
             ILogger<LoginWithRecoveryCodeModel> logger)
         {
             _signInManager = signInManager;

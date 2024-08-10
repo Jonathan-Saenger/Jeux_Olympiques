@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@using Jeux_Olympiques.Areas.Identity.Data;
+@inject SignInManager<Jeux_OlympiquesUser> SignInManager
+@inject UserManager<Jeux_OlympiquesUser> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
