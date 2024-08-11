@@ -8,17 +8,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Jeux_Olympiques.Areas.Identity.Data;
 
 namespace Jeux_Olympiques.Areas.Identity.Pages.Account.Manage
 {
     public class SetPasswordModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<Jeux_OlympiquesUser> _userManager;
+        private readonly SignInManager<Jeux_OlympiquesUser> _signInManager;
 
         public SetPasswordModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            UserManager<Jeux_OlympiquesUser> userManager,
+            SignInManager<Jeux_OlympiquesUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

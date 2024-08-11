@@ -9,17 +9,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Jeux_Olympiques.Areas.Identity.Data;
 
 namespace Jeux_Olympiques.Areas.Identity.Pages.Account.Manage
 {
     public class IndexModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<Jeux_OlympiquesUser> _userManager;
+        private readonly SignInManager<Jeux_OlympiquesUser> _signInManager;
 
         public IndexModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            UserManager<Jeux_OlympiquesUser> userManager,
+            SignInManager<Jeux_OlympiquesUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -51,6 +52,15 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public class InputModel
         {
+            [Required]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+            [Display(Name = "Prénom")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+            [Display(Name = "Nom")]
+            public string LastName { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -60,7 +70,7 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account.Manage
             public string PhoneNumber { get; set; }
         }
 
-        private async Task LoadAsync(IdentityUser user)
+        private async Task LoadAsync(Jeux_OlympiquesUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
@@ -69,7 +79,9 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                FirstName = user.FirstName,
+                LastName = user.LastName
             };
         }
 
@@ -98,6 +110,10 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account.Manage
                 await LoadAsync(user);
                 return Page();
             }
+
+            user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
+            await _userManager.UpdateAsync(user);
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
