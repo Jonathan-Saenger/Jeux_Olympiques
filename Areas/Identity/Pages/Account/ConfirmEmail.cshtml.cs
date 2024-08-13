@@ -45,7 +45,7 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
-            StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
+            StatusMessage = result.Succeeded ? "La vérification de votre mail a bien été effectuée, à très vite sur le site des Jeux Olympiques !" : "Une erreur est survenue lors de la vérification de votre mail !";
             return Page();
         }
     }

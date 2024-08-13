@@ -73,8 +73,8 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
 
                 await _emailSender.SendEmailAsync(
                     Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    "[JEUX OLYMPIQUES] Changement de mot de passe",
+                    $"Bonjour, <br><br> Pour renouveller votre mot de passe, veuillez vous rendre sur ce lien : <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Cliquez ici</a>. <br><br> A très vite sur le site des Jeux Olympiques !");
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
