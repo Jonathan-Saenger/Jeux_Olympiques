@@ -27,6 +27,14 @@ builder.Services.ConfigureApplicationCookie(o => {
     o.SlidingExpiration = true;
 });
 
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Default Lockout settings.
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

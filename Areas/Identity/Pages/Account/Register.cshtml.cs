@@ -74,12 +74,14 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
             //Ajouts personnalisés
             [Required]
             [DataType(DataType.Text)]
+            [RegularExpression(@"^[A-ZÀ-ÿ]+[a-zA-ZÀ-ÿ\s]*$", ErrorMessage = "Veuillez utiliser uniquement des lettres")]
             [StringLength(100, ErrorMessage = "Le {0} doit comporter au moins {2} caractères et au maximum {1} caractères.", MinimumLength = 1)]
             [Display(Name = "Prénom")]
             public string FirstName { get; set; }
 
             [Required]
             [DataType(DataType.Text)]
+            [RegularExpression(@"^[A-ZÀ-ÿ]+[a-zA-ZÀ-ÿ\s]*$", ErrorMessage = "Veuillez utiliser uniquement des lettres")]
             [StringLength(100, ErrorMessage = "Le {0} doit comporter au moins {2} caractères et au maximum {1} caractères.", MinimumLength = 1)]
             [Display(Name = "Nom")]
             public string LastName { get; set; }
@@ -109,10 +111,10 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
             /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "Vos deux mots de passe doivent être identiques")]
             public string ConfirmPassword { get; set; }
         }
-
+        
 
         public async Task OnGetAsync(string returnUrl = null)
         {
