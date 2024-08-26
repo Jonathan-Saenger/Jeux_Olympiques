@@ -2,7 +2,7 @@
 <img src="wwwroot/images/image_jo.png" alt="Logo" height="50%"></p>
 <h2> Bienvenue sur le GITHUB du Projet d'application web </h2>
 
-Lien du site : https://jeuxolympiques2024webapp.azurewebsites.net/ <br>
+Lien du site : https://jeuxolympiques.azurewebsites.net/ <br>
 
 Lien Github : https://github.com/Jonathan-Saenger/Jeux_Olympiques <br>
 
