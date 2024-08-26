@@ -4,9 +4,23 @@
       "type": "mssql",
       "connectionId": "ConnectionStrings:DefaultConnection"
     },
+    "mssql3": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:Jeux_OlympiquesContextConnection"
+    },
     "mssql2": {
       "type": "mssql",
-      "connectionId": "ConnectionStrings:dbconnection"
+      "connectionId": "ConnectionStrings:dbconnection",
+      "dynamicId": null
+    },
+    "mssql4": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:AZURE_SQL_CONNECTIONSTRING",
+      "dynamicId": null
+    },
+    "secrets1": {
+      "type": "secrets",
+      "connectionId": null
     }
   }
 }

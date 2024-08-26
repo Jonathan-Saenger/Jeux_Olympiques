@@ -1,0 +1,11 @@
+﻿@page
+@model LockoutModel
+@{
+    ViewData["Title"] = "Identification bloquée";
+}
+
+<header>
+    <h1 class="text-danger">@ViewData["Title"]</h1>
+    <p class="text-danger">Suite à un nombre trop important de tentatives de connexions, votre compte est momentanément bloqué. </p>
+    <p> Veuillez tenter de vous reconnecter ultérieurement ou contacter l'administrateur. </p>
+</header>
