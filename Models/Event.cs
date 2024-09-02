@@ -8,6 +8,6 @@
         public DateTime Date { get; set; }
         public string? Site {  get; set; }
         public Offer? Offer { get; set; }
-        public User? Created { get; set; } //Admin qui créer des offres
+        public User? Created { get; set; }
     }
 }

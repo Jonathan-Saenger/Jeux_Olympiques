@@ -7,6 +7,8 @@
         public string? QrCode { get; set; }
         public float Price { get; set; }
         public string? TicketKey { get; set; }
-        public User? Buyer  { get; set; }
+        public User? Buyer { get; set; }
+        public Offer? Contains { get; set; }
+
     }
 }
