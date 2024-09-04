@@ -20,3 +20,12 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+h1 {
+    font-family:'Palatino Linotype';
+    font-size: 4rem;
+    background: linear-gradient(to bottom, #258cfb 10%, #258cfb 30%, #ffffff 70%, #ff0000 100%);
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: 0.5px black;
+}

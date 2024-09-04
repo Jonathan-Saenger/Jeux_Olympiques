@@ -1,8 +1,118 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Accueil Jeux Olympique 2024";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="mb-3">
+    <div class="p-5 text-center bg-body-tertiary" style="background-image: url('images/logo_entete.png'); background-size: cover; background-position: center; height: 300px; width: 100%">
+        <div class="container pt-3">
+            <h1> Bienvenue aux Jeux Olympiques 2024</h1>
+        </div>
+    </div>
 </div>
+
+<section>
+    <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary" style="background-image: url('images/jo_actualite.png'); background-size: cover; background-position: center;">
+        <div class="col-lg-6 px-0">
+            <h2>Retrouvez toute l'actualité des JO</h2>
+            <p class="lead my-3">Ne ratez aucunes news des jeux olympiques : classement des médailles, calendrier des évènements, sponsors, etc.</p>
+            <p class="lead mb-0"><a href="#" class="text-body fw-bold">Page des actualités...</a></p>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-primary-emphasis">Basket ball</strong>
+                    <h3 class="mb-0">Echec de l'équipe de France</h3>
+                    <div class="mb-1 text-body-secondary">04 août 2024</div>
+                    <p class="card-text mb-auto">L'équipe de France de basket ball n'a pas su renverser l'équipe des USA'.</p>
+                    <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+                        Continuer la lecture
+                    </a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img src="images/france_basket.png" width="200" height="250" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-success-emphasis">Natation</strong>
+                    <h3 class="mb-0">Exploits des nageurs français</h3>
+                    <div class="mb-1 text-body-secondary">05 août 2024</div>
+                    <p class="mb-auto">Découvrez les nouveaux explois réalisés par nos nageurs français.</p>
+                    <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+                        Continuer la lecture
+                    </a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img src="images/france_natation.png" width="200" height="250" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+    <h2 class="display-4 fw-normal text-body-emphasis">Dernières offres</h2>
+    <p class="fs-5 text-body-secondary">De nouvelles place ont été ajoutées. N'hésitez pas à les consulter. Attention, les disponibilités sont très limitées !</p>
+</div>
+
+<section>
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">Offre solo</h4>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title pricing-card-title">0€</h3>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>10 users included</li>
+                        <li>2 GB of storage</li>
+                        <li>Email support</li>
+                        <li>Help center access</li>
+                    </ul>
+                    <button type="button" class="w-100 btn btn-lg btn-outline-primary">Acheter</button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">Offre duo</h4>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title pricing-card-title">0€</h3>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>10 users included</li>
+                        <li>2 GB of storage</li>
+                        <li>Email support</li>
+                        <li>Help center access</li>
+                    </ul>
+                    <button type="button" class="w-100 btn btn-lg btn-outline-primary">Acheter</button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">Offre famille</h4>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title pricing-card-title">0€</h3>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>10 users included</li>
+                        <li>2 GB of storage</li>
+                        <li>Email support</li>
+                        <li>Help center access</li>
+                    </ul>
+                    <button type="button" class="w-100 btn btn-lg btn-outline-primary">Acheter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
