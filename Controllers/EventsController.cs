@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Jeux_Olympiques.Data;
 using Jeux_Olympiques.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Jeux_Olympiques.Controllers
 {
@@ -54,6 +55,7 @@ namespace Jeux_Olympiques.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,Entitled,Presentation,Date,Site")] Event @event)
         {
             if (ModelState.IsValid)
@@ -66,6 +68,7 @@ namespace Jeux_Olympiques.Controllers
         }
 
         // GET: Events/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,6 +89,7 @@ namespace Jeux_Olympiques.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Entitled,Presentation,Date,Site")] Event @event)
         {
             if (id != @event.Id)
@@ -117,6 +121,7 @@ namespace Jeux_Olympiques.Controllers
         }
 
         // GET: Events/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,6 +142,7 @@ namespace Jeux_Olympiques.Controllers
         // POST: Events/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var @event = await _context.Events.FindAsync(id);

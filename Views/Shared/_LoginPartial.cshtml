@@ -9,9 +9,19 @@
     Jeux_OlympiquesUser? user = await UserManager.GetUserAsync(User);
     var fullname = $"{user?.FirstName} {user?.LastName}";
 
+    @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin")))
+    {
     <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Bonjour, @fullname !</a>
+        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Bonjour, Administrateur !</a>
+       </li>
+    }
+    else
+    {
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Bonjour, @fullname !</a>
     </li>
+    }
+
     @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin")))
     {
         <li class="nav-item">
