@@ -1,4 +1,8 @@
-﻿@model IEnumerable<Jeux_Olympiques.Models.Event>
+﻿@using Microsoft.AspNetCore.Identity
+@using Jeux_Olympiques.Areas.Identity.Data;
+@inject SignInManager<Jeux_OlympiquesUser> SignInManager
+@inject UserManager<Jeux_OlympiquesUser> UserManager
+@model IEnumerable<Jeux_Olympiques.Models.Event>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,9 +10,12 @@
 
 <h1>Billeterie des Jeux Olympiques</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin")))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
 <table class="table">
     <thead>
         <tr>

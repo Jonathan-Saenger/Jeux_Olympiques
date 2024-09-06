@@ -45,6 +45,7 @@ namespace Jeux_Olympiques.Controllers
         }
 
         // GET: Events/Create
+        [Authorize(Roles ="Admin")]
         public IActionResult Create()
         {
             return View();
