@@ -13,7 +13,9 @@
 @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin")))
 {
     <p>
-        <a asp-action="Create">Create New</a>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-2"></i>Créer un évènement
+        </a>
     </p>
 }
 <table class="table">
