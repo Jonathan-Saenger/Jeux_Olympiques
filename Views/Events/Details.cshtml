@@ -1,10 +1,14 @@
-﻿@model Jeux_Olympiques.Models.Event
+﻿@using Microsoft.AspNetCore.Identity
+@using Jeux_Olympiques.Areas.Identity.Data;
+@inject SignInManager<Jeux_OlympiquesUser> SignInManager
+@inject UserManager<Jeux_OlympiquesUser> UserManager
+@model Jeux_Olympiques.Models.Event
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>@Html.DisplayFor(model => model.Entitled)</h1>
 
 <div>
     <h4>Event</h4>
@@ -37,6 +41,9 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin")))
+    {
+        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+    }
+    <a asp-action="Index" class="btn btn-primary">Retour au menu</a>
 </div>
