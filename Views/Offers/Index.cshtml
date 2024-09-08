@@ -1,14 +1,24 @@
-﻿@model IEnumerable<Jeux_Olympiques.Models.Offer>
+﻿@using Microsoft.AspNetCore.Identity
+@using Jeux_Olympiques.Areas.Identity.Data;
+@inject SignInManager<Jeux_OlympiquesUser> SignInManager
+@inject UserManager<Jeux_OlympiquesUser> UserManager
+@model IEnumerable<Jeux_Olympiques.Models.Offer>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Création des offres</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin")))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-2"></i>Créer une offre
+        </a>
+    </p>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -40,14 +50,41 @@
                 @Html.DisplayFor(modelItem => item.Place)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @Html.DisplayFor(modelItem => item.Price) €
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin")))
+                {
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Modifier</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
+                }
+                 <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Détail du billet</a> 
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+
+<section>
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        @foreach (var item in Model)
+        {
+
+            <div class="col">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+                        <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title pricing-card-title">@Html.DisplayFor(modelItem => item.Price) €</h4>
+                        <h4>@Html.DisplayFor(modelItem => item.Description)</h4>
+                        <h4>@Html.DisplayFor(modelItem => item.Place)</h4>
+                        <button type="button" class="w-100 btn btn-lg btn-outline-primary">Acheter</button>
+                    </div>
+                </div>
+            </div>
+        }        
+    </div>
+</section>
+

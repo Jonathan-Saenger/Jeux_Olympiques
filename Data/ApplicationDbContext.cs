@@ -16,4 +16,6 @@ namespace Jeux_Olympiques.Data
         public DbSet<Ticket>? Tickets { get; set; }
 
         }
+
+
     }
