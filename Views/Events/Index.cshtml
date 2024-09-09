@@ -8,7 +8,15 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Billeterie des Jeux Olympiques</h1>
+
+
+<div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary" style="background-image: url('images/entete_billeterie2.png'); background-size: cover; background-position: center;">
+    <div>
+        <h1 class="fw-bold">Billeterie des Jeux Olympiques 2024</h1>
+        <p class="fs-3 text text-white fw-bold">Bienvenue sur la billetterie officielle des Jeux Olympiques 2024 ! Connectez-vous pour accéder aux informations de vos commandes</p>
+        <a class="btn btn-danger rounded-pill px-3 fw-bold" asp-area="Identity" asp-page="/Account/Login">Je me connecte</a>
+    </div>
+</div>
 
 @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin")))
 {
@@ -17,49 +25,61 @@
             <i class="bi bi-plus-circle me-2"></i>Créer un évènement
         </a>
     </p>
-}
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Entitled)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Presentation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Site)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Entitled)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Presentation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Site)
-            </td>
-            <td>
-                @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin")))
-                {
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Entitled)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Presentation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Site)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Entitled)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Presentation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Site)
+                </td>
+                <td>
                     <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Modifier</a>
                     <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
-                }
-                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Billet</a>
-            </td>
-        </tr>
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Billet</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
 }
-    </tbody>
-</table>
+
+@foreach (var item in Model) {
+<div class="container my-5">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+        <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+            <h2 class="display-4 fw-bold lh-1 text-body-emphasis">@Html.DisplayFor(modelItem => item.Entitled)</h2>
+                <p class="lead fw-bolder fs-3">@Html.DisplayFor(modelItem => item.Presentation)</p>
+                <p class="lead">@Html.DisplayFor(modelItem => item.Site)</p>
+        </div>
+        <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden text-center pb-3">
+                <a class="btn btn-primary btn-lg px-4 me-md-2 fw-bold" asp-action="Details" asp-route-id="@item.Id">Réserver</a>
+        </div>
+    </div>
+</div>
+}
