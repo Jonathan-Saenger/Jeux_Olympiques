@@ -1,9 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using Jeux_Olympiques.Areas.Identity.Data;
-@inject SignInManager<Jeux_OlympiquesUser> SignInManager
-@inject UserManager<Jeux_OlympiquesUser> UserManager
-@model IEnumerable<Jeux_Olympiques.Models.Event>
-@model Jeux_Olympiques.Models.Event
+﻿@model Jeux_Olympiques.Models.Event
 
 @{
     ViewData["Title"] = "Create";
@@ -43,50 +38,6 @@
         </form>
     </div>
 </div>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Entitled)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Presentation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Site)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Entitled)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Presentation)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Site)
-                </td>
-                <td>
-                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Modifier</a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
-                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Billet</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
 
 <div>
     <a class="btn btn-primary" asp-action="Index">Retour au menu</a>
