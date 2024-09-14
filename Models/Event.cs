@@ -18,7 +18,8 @@ namespace Jeux_Olympiques.Models
         public string? Site {  get; set; }
 
         [Display(Name = "Choix du ticket")]
-        public Offer? Offer { get; set; }
         public User? Created { get; set; }
+
+        public ICollection<Offer>? Offers { get; set; }
     }
 }

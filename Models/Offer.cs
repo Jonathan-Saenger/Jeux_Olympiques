@@ -17,7 +17,6 @@ namespace Jeux_Olympiques.Models
         [Display(Name = "Prix")]
         public float? Price { get; set; }
         public User? Publish { get; set; }
-        public List<Event>? PresentEvent { get; set; }
         public List<Ticket>? IsContained { get; set; }
 
     }
