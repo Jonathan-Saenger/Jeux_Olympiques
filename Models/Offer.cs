@@ -15,10 +15,12 @@ namespace Jeux_Olympiques.Models
         public string? Place {  get; set; }
 
         [Display(Name = "Prix")]
-        public float? Price { get; set; }
+        public decimal? Price { get; set; }
         public User? Publish { get; set; }
-        public List<Ticket>? IsContained { get; set; }
+        public int EventId { get; set; }
 
+        public Event? Events { get; set; }   
+        public List<Ticket>? IsContained { get; set; }
     }
 
 }

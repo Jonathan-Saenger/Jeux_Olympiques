@@ -40,6 +40,38 @@
         </dd>
     </dl>
 </div>
+
+
+<section>
+    @if (Model.Offers != null && Model.Offers.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+            @foreach (var item in Model.Offers)
+            {
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title pricing-card-title">@Html.DisplayFor(modelItem => item.Price) €</h4>
+                            <h4>@Html.DisplayFor(modelItem => item.Description)</h4>
+                            <h4>@Html.DisplayFor(modelItem => item.Place)</h4>
+                            <button type="button" class="w-100 btn btn-lg btn-outline-primary">Acheter</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>Aucune offre disponible pour cet événement.</p>
+    }
+</section>
+
+
+
 <div>
     @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin")))
     {

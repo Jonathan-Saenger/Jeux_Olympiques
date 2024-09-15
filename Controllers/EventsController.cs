@@ -35,6 +35,7 @@ namespace Jeux_Olympiques.Controllers
             }
 
             var @event = await _context.Events
+                .Include(e => e.Offers)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (@event == null)
             {
