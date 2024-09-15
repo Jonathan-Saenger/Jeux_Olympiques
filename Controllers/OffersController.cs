@@ -48,6 +48,7 @@ namespace Jeux_Olympiques.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
+            ViewData["EventId"] = new SelectList(_context.Events, "Id", "Entitled");
             return View();
         }
 
@@ -57,7 +58,7 @@ namespace Jeux_Olympiques.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Place,Price")] Offer offer)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,Place,Price,EventId")] Offer offer)
         {
             if (ModelState.IsValid)
             {
@@ -65,6 +66,7 @@ namespace Jeux_Olympiques.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["EventId"] = new SelectList(_context.Events, "Id", "Entitled", offer.EventId);
             return View(offer);
         }
 
