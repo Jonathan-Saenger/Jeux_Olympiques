@@ -9,11 +9,10 @@
 }
 
 <div class="p-4 p-md-5 rounded text-body-emphasis bg-body-secondary" style="background-image: url('/images/billeterie_entete.png'); background-size: cover; background-position: center;">
-    <div>
-        <h1 class="fw-bold text-center" style="border: 2px solid rgba(255, 255, 255, 0.8); padding: 10px; border-radius: 5px; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);"> @Model.Entitled</h1>
-    </div>
-</div>
+    <p class="fs-1" fw-bold text-center text-white">Choisissez une offre</p>
 
+</div>
+<h1 class="fw-bold text-center" style="border: 2px solid rgba(255, 255, 255, 0.8); padding: 10px; border-radius: 5px; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);"> @Model.Entitled</h1>
 <div class="row mb-4 text-center">
     <div class="col-md-12">
         <div class="card">
@@ -21,7 +20,6 @@
                 <p class="card-text fw-bolder">@Model.Presentation</p>
             </div>
         <div class="card-footer text-white" style="background-color: orangered; box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);">
-                <!-- Utiliser un format de date seulement si Date est non null -->
                 <p class="mb-1"><strong>Date :</strong> @(Model.Date.HasValue ? Model.Date.Value.ToString("dd MMM yyyy, HH:mm") : "Non spécifié")</p>
                 <p class="mb-0"><strong>Lieu :</strong> @Model.Site</p>
             </div>
@@ -29,7 +27,8 @@
     </div>
 </div>
 
-<section>
+<div class="container px-4 py-5"">
+    <h2 class="pb-2 border-bottom">Découvrez les offres</h2>
     @if (Model.Offers != null && Model.Offers.Any())
     {
         <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
@@ -55,7 +54,7 @@
     {
         <p>Aucune offre disponible pour cet événement.</p>
     }
-</section>
+</div>
 
 
 

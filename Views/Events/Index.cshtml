@@ -73,6 +73,7 @@
         <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
             <h2 class="display-4 fw-bold lh-1 text-body-emphasis">@Html.DisplayFor(modelItem => item.Entitled)</h2>
                 <p class="lead fw-bolder fs-3">@Html.DisplayFor(modelItem => item.Presentation)</p>
+                <p class="lead fw-bold">@(item.Date.HasValue ? item.Date.Value.ToString("dd MMM yyyy, HH:mm") : "Date non spécifiée")</p>
                 <p class="lead">@Html.DisplayFor(modelItem => item.Site)</p>
         </div>
         <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden text-center pb-3">
