@@ -12,7 +12,10 @@
     <div>
         <h1 class="fw-bold">Billeterie des Jeux Olympiques 2024</h1>
         <p class="fs-3 text text-white fw-bold">Bienvenue sur la billetterie officielle des Jeux Olympiques 2024 ! Connectez-vous pour accéder aux informations de vos commandes</p>
-        <a class="btn btn-danger rounded-pill px-3 fw-bold" asp-area="Identity" asp-page="/Account/Login">Je me connecte</a>
+        @if (!SignInManager.IsSignedIn(User))
+        {
+            <a class="btn btn-danger rounded-pill px-3 fw-bold" asp-area="Identity" asp-page="/Account/Login">Je me connecte</a>
+        }
     </div>
 </div>
 

@@ -8,26 +8,17 @@
     ViewData["Title"] = "Details";
 }
 
-<div class="p-4 p-md-5 rounded text-body-emphasis bg-body-secondary" style="background-image: url('/images/billeterie_entete.png'); background-size: cover; background-position: center;">
-    <p class="fs-1" fw-bold text-center text-white">Choisissez une offre</p>
+<!--<img src="~/images/billeterie_entete.png" class="img-fluid" alt="..." width="100%">-->
 
-</div>
-<h1 class="fw-bold text-center" style="border: 2px solid rgba(255, 255, 255, 0.8); padding: 10px; border-radius: 5px; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);"> @Model.Entitled</h1>
-<div class="row mb-4 text-center">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body" style="background-color: floralwhite">
-                <p class="card-text fw-bolder">@Model.Presentation</p>
-            </div>
-        <div class="card-footer text-white" style="background-color: orangered; box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);">
-                <p class="mb-1"><strong>Date :</strong> @(Model.Date.HasValue ? Model.Date.Value.ToString("dd MMM yyyy, HH:mm") : "Non spécifié")</p>
-                <p class="mb-0"><strong>Lieu :</strong> @Model.Site</p>
-            </div>
-        </div>
-    </div>
+
+<div class="container" style="background: linear-gradient(to right, rgba(0, 85, 164, 0.2), rgba(255, 255, 255, 0.2), rgba(239, 65, 53, 0.2)); padding: 20px;">
+    <h1 class="fw-bold text-center py-3"> @Model.Entitled</h1>
+    <h2 class="featurette-heading fw-normal lh-1 my-3 text-center">@Model.Presentation</h2>
+    <p class="lead text-center"><strong>Date :</strong> @(Model.Date.HasValue ? Model.Date.Value.ToString("dd MMM yyyy, HH:mm") : "Non spécifié")</p>
+    <p class="lead text-center pb-3"><strong>Lieu :</strong> @Model.Site</p>
 </div>
 
-<div class="container px-4 py-5"">
+<div class="container mt-3">
     <h2 class="pb-2 border-bottom">Découvrez les offres</h2>
     @if (Model.Offers != null && Model.Offers.Any())
     {
@@ -36,7 +27,7 @@
             {
                 <div class="col">
                     <div class="card mb-4 rounded-3 shadow-sm">
-                        <div class="card-header py-3">
+                        <div class="card-header">
                             <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
                         </div>
                         <div class="card-body">
