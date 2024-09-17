@@ -4,6 +4,7 @@ using Jeux_Olympiques.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jeux_Olympiques.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240914235232_UpdateRelationsEventOffer2")]
+    partial class UpdateRelationsEventOffer2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,14 +149,14 @@ namespace Jeux_Olympiques.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EventId")
+                    b.Property<int?>("EventId")
                         .HasColumnType("int");
 
                     b.Property<string>("Place")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<float?>("Price")
+                        .HasColumnType("real");
 
                     b.Property<string>("PublishId")
                         .HasColumnType("nvarchar(450)");
@@ -363,17 +366,15 @@ namespace Jeux_Olympiques.Data.Migrations
 
             modelBuilder.Entity("Jeux_Olympiques.Models.Offer", b =>
                 {
-                    b.HasOne("Jeux_Olympiques.Models.Event", "Events")
+                    b.HasOne("Jeux_Olympiques.Models.Event", "Event")
                         .WithMany("Offers")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EventId");
 
                     b.HasOne("Jeux_Olympiques.Models.User", "Publish")
                         .WithMany("CreateOffer")
                         .HasForeignKey("PublishId");
 
-                    b.Navigation("Events");
+                    b.Navigation("Event");
 
                     b.Navigation("Publish");
                 });

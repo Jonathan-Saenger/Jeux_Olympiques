@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Jeux_Olympiques.Data;
 using Jeux_Olympiques.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Jeux_Olympiques.Controllers
 {
@@ -44,8 +45,10 @@ namespace Jeux_Olympiques.Controllers
         }
 
         // GET: Offers/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
+            ViewData["EventId"] = new SelectList(_context.Events, "Id", "Entitled");
             return View();
         }
 
@@ -54,7 +57,8 @@ namespace Jeux_Olympiques.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Place,Price")] Offer offer)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,Place,Price,EventId")] Offer offer)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +66,7 @@ namespace Jeux_Olympiques.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["EventId"] = new SelectList(_context.Events, "Id", "Entitled", offer.EventId);
             return View(offer);
         }
 
@@ -86,6 +91,7 @@ namespace Jeux_Olympiques.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Place,Price")] Offer offer)
         {
             if (id != offer.Id)
@@ -137,6 +143,7 @@ namespace Jeux_Olympiques.Controllers
         // POST: Offers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var offer = await _context.Offers.FindAsync(id);

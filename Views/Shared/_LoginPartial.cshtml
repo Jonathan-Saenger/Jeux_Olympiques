@@ -9,13 +9,29 @@
     Jeux_OlympiquesUser? user = await UserManager.GetUserAsync(User);
     var fullname = $"{user?.FirstName} {user?.LastName}";
 
+    @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin")))
+    {
     <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Bonjour, @fullname !</a>
+        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Bonjour, Administrateur !</a>
+       </li>
+    }
+    else
+    {
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Bonjour, @fullname !</a>
     </li>
+    }
+
     @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin")))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Dashboard">Dashboard</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Dashboard">Statistiques</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Events" asp-action="Index">Gestion des évènement</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Offers" asp-action="Index">Gestion des offres</a>
         </li>
     }
     <li class="nav-item">
@@ -27,7 +43,7 @@
 else
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">S'inscrire'</a>
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">S'inscrire</a>
     </li>
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Se connecter</a>

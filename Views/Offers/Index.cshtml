@@ -1,14 +1,15 @@
-﻿@model IEnumerable<Jeux_Olympiques.Models.Offer>
+﻿@using Microsoft.AspNetCore.Identity
+@using Jeux_Olympiques.Areas.Identity.Data;
+@inject SignInManager<Jeux_OlympiquesUser> SignInManager
+@inject UserManager<Jeux_OlympiquesUser> UserManager
+@model IEnumerable<Jeux_Olympiques.Models.Offer>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Retrouvez la liste des offres créées</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -40,14 +41,31 @@
                 @Html.DisplayFor(modelItem => item.Place)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @Html.DisplayFor(modelItem => item.Price) €
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin")))
+                {
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Modifier</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
+                }
+                 <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Détail du billet</a> 
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+
+@if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin")))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-2"></i>Créer une offre
+        </a>
+    </p>
+}
+
+
+
+
