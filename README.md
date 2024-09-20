@@ -22,16 +22,19 @@ Les outils de développement sont téléchargeables ici : https://visualstudio.micr
 
 <h3> Avec Visual Studio : </h3>
 
-<ol>
-	<ul>1. Ouvrez Visual Studio</ul>
-	<ul>2. Dans la fenêtre de démarrage, à droite, sélectionnez <b>Cloner un référentiel</b></ul>
-	<ul>3. Dans l'emplacement du référentiel, copier et coller le lien suivant : 
-	<code>https://github.com/Jonathan-Saenger/Jeux_Olympiques.git</code></ul>
-	<ul>4. Cliquez sur <b> Cloner </b> </ul>
-</ol>
+1. Ouvrez Visual Studio
+2. Dans la fenêtre de démarrage, à droite, sélectionnez <b>Cloner un référentiel</b>
+3. Dans l'emplacement du référentiel, copier et coller le lien suivant 
+
+```
+https://github.com/Jonathan-Saenger/Jeux_Olympiques.git
+```
+
 Visual Studio chargera ensuite le projet à partir du référentiel dans l'Explorateur de solutions.
 
 <h3> Avec la ligne de commande </h3>
 
 Placez-vous dans le répertoire où vous souhaitez déposer le projet puis, depuis votre terminal, saisissez la commande : 
-<code> https://github.com/Jonathan-Saenger/Jeux_Olympiques.git </code>
+```
+https://github.com/Jonathan-Saenger/Jeux_Olympiques.git
+```
