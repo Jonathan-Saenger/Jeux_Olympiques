@@ -18,7 +18,14 @@ Lien Trello : https://trello.com/invite/b/5e7pGNKe/ATTI18b48db20c5f03a11134fc5f7
 Installation de Visual Studio <I>ou</I> Visual Studio Code.
 Les outils de développement sont téléchargeables ici : https://visualstudio.microsoft.com/fr/downloads/?cid=learn-onpage-download-cta
 
-<h2> Récupération du projet depuis le dépôt distant </h2>
+Si vous utilisez <b>Visual Studio Code</b>, ouvrez votre éditeur, rendez-vous dans l'onglet <b> Extensions </b> puis installez
+les extensions suivantes : 
+- C# (2.45.25)
+- .NET Install Tool (2.1.5)
+- C# Dev Kit (1.10.18)
+
+
+<h2> Récupération depuis le dépôt distant et ouverture du projet  </h2>
 
 <h3> Avec Visual Studio : </h3>
 
@@ -34,7 +41,17 @@ Visual Studio chargera ensuite le projet à partir du référentiel dans l'Explorat
 
 <h3> Avec la ligne de commande </h3>
 
-Placez-vous dans le répertoire où vous souhaitez déposer le projet puis, depuis votre terminal, saisissez la commande : 
+Choisissez l'emplacement où vous souhaitez déposer le projet puis, depuis votre terminal, saisissez la commande : 
 ```
 https://github.com/Jonathan-Saenger/Jeux_Olympiques.git
+```
+
+Déplacez-vous dans le dossier en tapant dans le terminal : 
+```
+cd Jeux_Olympiques
+```
+
+puis, pour ouvrir projet  avec Visual Studio Code : 
+```
+code .
 ```
