@@ -28,6 +28,18 @@ Avant de commencer, assurez-vous d'avoir installé les éléments suivants :
 
 <h3> Avec Visual Studio : </h3>
 
+1. Ouvrez Visual Studio
+2. Cliquez sur <b>Cloner un référentiel</b>
+3. Dans l'emplacement du référentiel, copier et coller l'URL :  
+
+```
+https://github.com/Jonathan-Saenger/Jeux_Olympiques.git
+```
+
+Visual Studio chargera automatiquement le projet dans l'Explorateur de solutions.
+
+<h3> Avec Visual Studio Code : </h3>
+
 1. Clonez le dépôt et ouvrez-le dans Visual Studio Code :
     ```bash
     git clone https://github.com/Jonathan-Saenger/Jeux_Olympiques.git
