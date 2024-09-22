@@ -18,13 +18,6 @@ Lien Trello : https://trello.com/invite/b/5e7pGNKe/ATTI18b48db20c5f03a11134fc5f7
 Installation de Visual Studio <I>ou</I> Visual Studio Code.
 Les outils de développement sont téléchargeables ici : https://visualstudio.microsoft.com/fr/downloads/?cid=learn-onpage-download-cta
 
-Si vous utilisez <b>Visual Studio Code</b>, ouvrez votre éditeur, rendez-vous dans l'onglet <b> Extensions </b> puis installez
-les extensions suivantes : 
-- C# (2.45.25)
-- .NET Install Tool (2.1.5)
-- C# Dev Kit (1.10.18)
-
-
 <h2> Récupération depuis le dépôt distant et ouverture du projet  </h2>
 
 <h3> Avec Visual Studio : </h3>
@@ -39,11 +32,11 @@ https://github.com/Jonathan-Saenger/Jeux_Olympiques.git
 
 Visual Studio chargera ensuite le projet à partir du référentiel dans l'Explorateur de solutions.
 
-<h3> Avec la ligne de commande </h3>
+<h3> Avec la ligne de commande et Visual Studio Code </h3>
 
-Choisissez l'emplacement où vous souhaitez déposer le projet puis, depuis votre terminal, saisissez la commande : 
+Choisissez localement le répertoire dans lequel vous souhaitez déposer le projet puis, depuis votre terminal, saisissez la commande : 
 ```
-https://github.com/Jonathan-Saenger/Jeux_Olympiques.git
+git clone https://github.com/Jonathan-Saenger/Jeux_Olympiques.git
 ```
 
 Déplacez-vous dans le dossier en tapant dans le terminal : 
@@ -51,7 +44,43 @@ Déplacez-vous dans le dossier en tapant dans le terminal :
 cd Jeux_Olympiques
 ```
 
-puis, pour ouvrir projet  avec Visual Studio Code : 
+puis, pour ouvrir projet avec Visual Studio Code :
 ```
 code .
+```
+
+NB : <i>  Un message "Faites-vous confiance aux auteurs des fichiers de ce dossier" apparaitra, vous pourrez sélectionner
+"Oui, je fais confiance aux auteurs" avant de valider. </i>
+
+Une fois le projet ouvert, <b> vérifiez que vous possédez tous les pré-requis nécessaires </b>.
+
+Le cas échéant, rendez-vous dans l'onglet <b> Extensions </b> puis installez les extensions suivantes ou celles manquantes : 
+- C# (2.45.25)
+- .NET Install Tool (2.1.5)
+- C# Dev Kit (1.10.18)
+
+Dans un deuxième temps, installez le .NET SDK en le téléchargeant sur ce lien : https://dotnet.microsoft.com/en-us/download/dotnet/8.0. Notez bien l'emplacement car il servira à configurer la variable d'environnemennt.
+
+Une fois installé, configurez votre <b> Variable d'environnement </b> en vous rendant dans <b>Propriété système</b> -> <b> Variables d'environnement.. </b> -> dans <b> Variables systèmes </b>, cliquez sur <b> Nouvelle </b> pour spécifier le chemin vers les runtimes .NET. 
+Vous trouverez plus de détail sur la configuration de C# dans Visual Studio Code au sein de la documentation officielle : https://code.visualstudio.com/docs/csharp/get-started
+
+Assurez-vous que le SDK .NET est correctement configuré en tapant :
+```
+dotnet --version
+```
+Si le numéro de version s'affiche, vous pouvez passser à l'étape suivante.
+
+<h2> Lancement de l'application en local </h2>
+
+<h3> Avec Visual Studio </h3>
+
+Appuyer sur la touche F5 <br>
+ou <br>
+cliquez sur la flèche de démarrage verte dans la barre d'outils Visual Studio
+
+<h3> Avec Visual Studio Code </h3>
+
+Utilisez la commande 
+```
+dotnet run 
 ```
