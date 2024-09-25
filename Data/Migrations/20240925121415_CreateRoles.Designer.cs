@@ -4,6 +4,7 @@ using Jeux_Olympiques.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jeux_Olympiques.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240925121415_CreateRoles")]
+    partial class CreateRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,32 +157,6 @@ namespace Jeux_Olympiques.Data.Migrations
                     b.HasIndex("CreatedId");
 
                     b.ToTable("Events");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 4,
-                            Date = new DateTime(2024, 9, 11, 10, 15, 0, 0, DateTimeKind.Unspecified),
-                            Entitled = "Tir à l'arc",
-                            Presentation = "8ème de finale du Tir à l'Arc homme",
-                            Site = "Pelouse du Stade de Vincenne"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Date = new DateTime(2024, 9, 12, 12, 30, 0, 0, DateTimeKind.Unspecified),
-                            Entitled = "Natation",
-                            Presentation = "Quart de finale de Natation Femme 500 mètres",
-                            Site = "Piscine du Parc des Princes"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Date = new DateTime(2024, 9, 11, 18, 0, 0, 0, DateTimeKind.Unspecified),
-                            Entitled = "Ping Pong",
-                            Presentation = "Finale Homme France - Chine",
-                            Site = "Salle du Gymnase du Luxembourg"
-                        });
                 });
 
             modelBuilder.Entity("Jeux_Olympiques.Models.Offer", b =>
@@ -215,35 +192,6 @@ namespace Jeux_Olympiques.Data.Migrations
                     b.HasIndex("PublishId");
 
                     b.ToTable("Offers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 14,
-                            Description = "Entrée pour 1 personne",
-                            EventId = 4,
-                            Place = "Placement libre",
-                            Price = 29m,
-                            Title = "OFFRE SOLO"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Description = "Entrée pour 2 personnes",
-                            EventId = 4,
-                            Place = "Placement libre",
-                            Price = 55m,
-                            Title = "OFFRE DUO"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Description = "Entrée pour 4 personnes",
-                            EventId = 4,
-                            Place = "Placement libre",
-                            Price = 100m,
-                            Title = "OFFRE FAMILLE"
-                        });
                 });
 
             modelBuilder.Entity("Jeux_Olympiques.Models.Ticket", b =>

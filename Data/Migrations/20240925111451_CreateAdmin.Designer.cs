@@ -4,6 +4,7 @@ using Jeux_Olympiques.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jeux_Olympiques.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240925111451_CreateAdmin")]
+    partial class CreateAdmin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,27 +106,6 @@ namespace Jeux_Olympiques.Data.Migrations
                     b.HasDiscriminator().HasValue("Jeux_OlympiquesUser");
 
                     b.UseTphMappingStrategy();
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1DBFDCBB-4D11-4562-9756-602889FD4163",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "05e593f3-cb5b-4597-a926-e9bbf804289f",
-                            Email = "admin@jeuxolympiques.com",
-                            EmailConfirmed = true,
-                            FirstName = "AdminPrenom",
-                            LastName = "AdminNom",
-                            LockoutEnabled = true,
-                            NormalizedEmail = "ADMIN@JEUXOLYMPIQUES.COM",
-                            NormalizedUserName = "ADMIN@JEUXOLYMPIQUES.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEG1swvJSZyrab4nmV8Dl1AaNZIz/Owlf9869lZ7X0Vxr3DCd/XzSutmpTNTMddrNjA==",
-                            PhoneNumber = "NULL",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "65K4MQIYK4OSUVYHUY46KRXZ3EUBNO6R",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@jeuxolympiques.com"
-                        });
                 });
 
             modelBuilder.Entity("Jeux_Olympiques.Models.Event", b =>
@@ -154,32 +136,6 @@ namespace Jeux_Olympiques.Data.Migrations
                     b.HasIndex("CreatedId");
 
                     b.ToTable("Events");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 4,
-                            Date = new DateTime(2024, 9, 11, 10, 15, 0, 0, DateTimeKind.Unspecified),
-                            Entitled = "Tir à l'arc",
-                            Presentation = "8ème de finale du Tir à l'Arc homme",
-                            Site = "Pelouse du Stade de Vincenne"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Date = new DateTime(2024, 9, 12, 12, 30, 0, 0, DateTimeKind.Unspecified),
-                            Entitled = "Natation",
-                            Presentation = "Quart de finale de Natation Femme 500 mètres",
-                            Site = "Piscine du Parc des Princes"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Date = new DateTime(2024, 9, 11, 18, 0, 0, 0, DateTimeKind.Unspecified),
-                            Entitled = "Ping Pong",
-                            Presentation = "Finale Homme France - Chine",
-                            Site = "Salle du Gymnase du Luxembourg"
-                        });
                 });
 
             modelBuilder.Entity("Jeux_Olympiques.Models.Offer", b =>
@@ -215,35 +171,6 @@ namespace Jeux_Olympiques.Data.Migrations
                     b.HasIndex("PublishId");
 
                     b.ToTable("Offers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 14,
-                            Description = "Entrée pour 1 personne",
-                            EventId = 4,
-                            Place = "Placement libre",
-                            Price = 29m,
-                            Title = "OFFRE SOLO"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Description = "Entrée pour 2 personnes",
-                            EventId = 4,
-                            Place = "Placement libre",
-                            Price = 55m,
-                            Title = "OFFRE DUO"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Description = "Entrée pour 4 personnes",
-                            EventId = 4,
-                            Place = "Placement libre",
-                            Price = 100m,
-                            Title = "OFFRE FAMILLE"
-                        });
                 });
 
             modelBuilder.Entity("Jeux_Olympiques.Models.Ticket", b =>
@@ -306,15 +233,6 @@ namespace Jeux_Olympiques.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "59C78292-150C-4218-B08A-ACED1F79A45B",
-                            ConcurrencyStamp = "F92315DD - 48DD - 4EA1 - A4C3 - C532D81843B6",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -404,13 +322,6 @@ namespace Jeux_Olympiques.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "1DBFDCBB-4D11-4562-9756-602889FD4163",
-                            RoleId = "59C78292-150C-4218-B08A-ACED1F79A45B"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -442,6 +353,28 @@ namespace Jeux_Olympiques.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1DBFDCBB-4D11-4562-9756-602889FD4163",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "05e593f3-cb5b-4597-a926-e9bbf804289f",
+                            Email = "admin@jeuxolympiques.com",
+                            EmailConfirmed = true,
+                            FirstName = "AdminPrenom",
+                            LastName = "AdminNom",
+                            LockoutEnabled = true,
+                            NormalizedEmail = "ADMIN@JEUXOLYMPIQUES.COM",
+                            NormalizedUserName = "ADMIN@JEUXOLYMPIQUES.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEG1swvJSZyrab4nmV8Dl1AaNZIz/Owlf9869lZ7X0Vxr3DCd/XzSutmpTNTMddrNjA==",
+                            PhoneNumber = "NULL",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "65K4MQIYK4OSUVYHUY46KRXZ3EUBNO6R",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@jeuxolympiques.com",
+                            Name = "null"
+                        });
                 });
 
             modelBuilder.Entity("Jeux_Olympiques.Models.Event", b =>

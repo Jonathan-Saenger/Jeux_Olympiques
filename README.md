@@ -107,4 +107,12 @@ Dans le terminal intégré, exécutez :
 dotnet run 
 ```
 
+<h2> Se connecter à un compte sur l'application </h2>
+
+<p> Un compte Admin et un compte Utilisateur ont été spécialement créé afin de pouvoir tester
+l'application. Les données figurent dans un fichier de migration, ils seront donc automatiquement inséré
+dans votre base de données lors de la mise à jour de cette dernière. </p>
+
+
+
 Excellente navigation dans l'application !
