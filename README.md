@@ -6,6 +6,13 @@
 Bonjour et bienvenue dans le projet de billetterie pour les Jeux Olympiques 2024 ! Ce guide vous fournira toutes les 
 étapes nécessaires pour déployer et tester l'application localement.
 
+Dans le dossier ***Annexes*** à la racine du projet, vous trouverez : 
+* La documentation technique 
+* La manuel d'utilisation
+* Les rapports des tests unitaires
+
+L'ensemble des documents est également disponible dans le Trello.
+
 <h2> 🔗 Lien du projet </h2>
 
 Lien du site : https://jeuxolympiques.azurewebsites.net/ <br>
