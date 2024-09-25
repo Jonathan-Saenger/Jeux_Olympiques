@@ -45,6 +45,26 @@ namespace Jeux_Olympiques.Data
                     AccessFailedCount = 0,
                     FirstName = "AdminPrenom",
                     LastName = "AdminNom",
+               },
+               new Jeux_OlympiquesUser
+               {
+                   Id = "c7a42f97-4108-4ff9-bdee-326866513a03",
+                   UserName = "user@jeuxolympiques.com",
+                   NormalizedUserName = "USER@JEUXOLYMPIQUES.COM",
+                   Email = "user@jeuxolympiques.com",
+                   NormalizedEmail = "USER@JEUXOLYMPIQUES.COM",
+                   EmailConfirmed = true,
+                   PasswordHash = "AQAAAAIAAYagAAAAEAuQECgPLnpmQ3uGf3DY87bFAf1ny8toJ0OsyDbLnnruDv3QdxbYUe273bLsX39Eeg==",
+                   SecurityStamp = "LZBL3DTGYNXJPNQ3ZJ2JN3ZNI54WA4T3",
+                   ConcurrencyStamp = "3967ca6c-926b-4610-93f8-e4ee58de29ef",
+                   PhoneNumber = "NULL",
+                   PhoneNumberConfirmed = false,
+                   TwoFactorEnabled = false,
+                   LockoutEnd = null,
+                   LockoutEnabled = true,
+                   AccessFailedCount = 0,
+                   FirstName = "Franck",
+                   LastName = "Letesteur",
                }
             );
 
