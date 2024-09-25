@@ -3,9 +3,8 @@
 <img src="wwwroot/images/readme.png" alt="Logo"></p>
 
 
-Bonjour et bienvenue dans le projet de billetterie pour les Jeux Olympiques 2024
-
-Vous trouverez ci-dessous l'ensemble des étapes à suivre pour déployer localement le projet. Je vous souhaite une bonne installation. 
+Bonjour et bienvenue dans le projet de billetterie pour les Jeux Olympiques 2024 ! Ce guide vous fournira toutes les 
+étapes nécessaires pour déployer et tester l'application localement.
 
 <h2> 🔗 Lien du projet </h2>
 
@@ -107,11 +106,21 @@ Dans le terminal intégré, exécutez :
 dotnet run 
 ```
 
-<h2> Se connecter à un compte sur l'application </h2>
+<h2> 🔐  Se connecter à un compte sur l'application </h2>
 
 <p> Un compte Admin et un compte Utilisateur ont été spécialement créé afin de pouvoir tester
 l'application. Les données figurent dans un fichier de migration, ils seront donc automatiquement inséré
 dans votre base de données lors de la mise à jour de cette dernière. </p>
+
+ - **Admin Login** : 
+     - Email : `admin@jeuxolympiques.com`
+     - Password : `Admin2024olympiques?` (hashé dans la base de données)
+ - **User Login** : 
+     - Email : `user@jeuxolympiques.com`
+     - Password : `User2024olympiques?` (hashé dans la base de données)
+
+Pour le test, vous pouvez créer votre propre compte Utilisateur. Conformément à la demande du client, il n'est pas possible 
+de créer un compte Admin. 
 
 
 
