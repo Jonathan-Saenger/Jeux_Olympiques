@@ -2,12 +2,27 @@
 
 namespace Jeux_Olympiques.Models
 {
+    public enum Sport
+    {
+        Athéltisme,
+        Haltérophilie,
+        Natation,
+        Escrime,
+        Equitation,
+        Football,
+        Basketball,
+        [Display(Name = "Tennis de table")]
+        TennisDeTable,
+        [Display(Name = "Volley ball")]
+        VolleyBall,
+
+    }
     public class Event
     {
         public int Id {  get; set; }
 
         [Display(Name = "Sport")]
-        public string? Entitled { get; set; }
+        public Sport Entitled { get; set; }
 
         public string? Presentation { get; set; }
 
