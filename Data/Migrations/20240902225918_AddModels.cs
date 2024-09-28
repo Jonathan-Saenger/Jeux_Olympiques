@@ -53,10 +53,10 @@ namespace Jeux_Olympiques.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Entitled = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Entitled = table.Column<int>(type: "int", nullable: true),
                     Presentation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Site = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Site = table.Column<int>(type: "int", nullable: true),
                     OfferId = table.Column<int>(type: "int", nullable: true),
                     CreatedId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },

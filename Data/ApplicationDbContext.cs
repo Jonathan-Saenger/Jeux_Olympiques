@@ -3,9 +3,6 @@ using Jeux_Olympiques.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
-using System.Security;
-using System.Security.Policy;
 
 
 namespace Jeux_Olympiques.Data
@@ -96,7 +93,7 @@ namespace Jeux_Olympiques.Data
                     Entitled = Sport.Escrime,
                     Presentation = "8ème de finale Escrime Homme",
                     Date = DateTime.Parse("2024 - 09 - 11 10:15:00"),
-                    Site = "Pelouse du Stade de Vincenne",
+                    Site = Lieu.GymnaseRhénus,
                 },
                 new Event
                 {
@@ -104,7 +101,7 @@ namespace Jeux_Olympiques.Data
                     Entitled = Sport.Natation,
                     Presentation = "Quart de finale de Natation Femme 500 mètres",
                     Date = DateTime.Parse("2024-09-12 12:30:00"),
-                    Site = "Piscine du Parc des Princes",
+                    Site = Lieu.CentreAquatiqueOlympique,
                 },
                 new Event
                 {
@@ -112,7 +109,7 @@ namespace Jeux_Olympiques.Data
                     Entitled = Sport.TennisDeTable,
                     Presentation = "Finale Homme France - Chine",
                     Date = DateTime.Parse("2024-09-11 18:00:00"),
-                    Site = "Salle du Gymnase du Luxembourg",
+                    Site = Lieu.GymnaseRhénus,
                 }
             );
 

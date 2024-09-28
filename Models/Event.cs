@@ -17,6 +17,21 @@ namespace Jeux_Olympiques.Models
         VolleyBall,
 
     }
+    public enum Lieu
+    {
+        [Display(Name = "Paris - Parc des Princes")]
+        ParcDesPrinces,
+        [Display(Name = "Paris - Stade Rolland Garros")]
+        StadeRollandGarros,
+        [Display(Name="Saint-Denis - Athlétisme Stade de France")]
+        AthetismeStadeDeFrance,
+        [Display(Name = "Strasbourg - Gymnase Rhénus")]
+        GymnaseRhénus,
+        [Display(Name = "Angers - Centre Aquatique Olympique")]
+        CentreAquatiqueOlympique,
+    }
+
+
     public class Event
     {
         public int Id {  get; set; }
@@ -30,7 +45,7 @@ namespace Jeux_Olympiques.Models
         public DateTime? Date { get; set; }
 
         [Display(Name = "Lieu")]
-        public string? Site {  get; set; }
+        public Lieu Site { get; set; }
 
         [Display(Name = "Choix du ticket")]
         public User? Created { get; set; }

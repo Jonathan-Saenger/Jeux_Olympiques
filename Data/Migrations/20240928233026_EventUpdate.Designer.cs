@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jeux_Olympiques.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240926223124_UpdateEventEntitledType")]
-    partial class UpdateEventEntitledType
+    [Migration("20240928233026_EventUpdate")]
+    partial class EventUpdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -168,8 +168,8 @@ namespace Jeux_Olympiques.Data.Migrations
                     b.Property<string>("Presentation")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Site")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Site")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -184,7 +184,7 @@ namespace Jeux_Olympiques.Data.Migrations
                             Date = new DateTime(2024, 9, 11, 10, 15, 0, 0, DateTimeKind.Unspecified),
                             Entitled = 3,
                             Presentation = "8ème de finale Escrime Homme",
-                            Site = "Pelouse du Stade de Vincenne"
+                            Site = 3
                         },
                         new
                         {
@@ -192,7 +192,7 @@ namespace Jeux_Olympiques.Data.Migrations
                             Date = new DateTime(2024, 9, 12, 12, 30, 0, 0, DateTimeKind.Unspecified),
                             Entitled = 2,
                             Presentation = "Quart de finale de Natation Femme 500 mètres",
-                            Site = "Piscine du Parc des Princes"
+                            Site = 4
                         },
                         new
                         {
@@ -200,7 +200,7 @@ namespace Jeux_Olympiques.Data.Migrations
                             Date = new DateTime(2024, 9, 11, 18, 0, 0, 0, DateTimeKind.Unspecified),
                             Entitled = 7,
                             Presentation = "Finale Homme France - Chine",
-                            Site = "Salle du Gymnase du Luxembourg"
+                            Site = 3
                         });
                 });
 

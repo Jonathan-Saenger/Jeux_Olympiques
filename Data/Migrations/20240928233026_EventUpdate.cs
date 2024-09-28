@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Jeux_Olympiques.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class NewEvents : Migration
+    public partial class EventUpdate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,9 +18,9 @@ namespace Jeux_Olympiques.Data.Migrations
                 columns: new[] { "Id", "CreatedId", "Date", "Entitled", "Presentation", "Site" },
                 values: new object[,]
                 {
-                    { 4, null, new DateTime(2024, 9, 11, 10, 15, 0, 0, DateTimeKind.Unspecified), 3, "8ème de finale Escrime Homme", "Pelouse du Stade de Vincenne" },
-                    { 5, null, new DateTime(2024, 9, 12, 12, 30, 0, 0, DateTimeKind.Unspecified), 2, "Quart de finale de Natation Femme 500 mètres", "Piscine du Parc des Princes" },
-                    { 6, null, new DateTime(2024, 9, 11, 18, 0, 0, 0, DateTimeKind.Unspecified), 7, "Finale Homme France - Chine", "Salle du Gymnase du Luxembourg" }
+                    { 4, null, new DateTime(2024, 9, 11, 10, 15, 0, 0, DateTimeKind.Unspecified), 3, "8ème de finale Escrime Homme", 3 },
+                    { 5, null, new DateTime(2024, 9, 12, 12, 30, 0, 0, DateTimeKind.Unspecified), 2, "Quart de finale de Natation Femme 500 mètres", 4 },
+                    { 6, null, new DateTime(2024, 9, 11, 18, 0, 0, 0, DateTimeKind.Unspecified), 7, "Finale Homme France - Chine", 3 }
                 });
 
             migrationBuilder.InsertData(
