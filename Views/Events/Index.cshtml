@@ -70,6 +70,40 @@
     </table>
 }
 
+<!-- Filtre de recherche -->
+<button id="toggleSearch" class="btn btn-outline-primary mb-3">Vous recherchez un évènement particulier ?</button>
+
+<div id="searchForm" style="display: none;">
+    <div class="card mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="entitled" class="form-label">Sport</label>
+                        <select id="entitled" name="entitled" asp-items="Html.GetEnumSelectList<Sport>()" class="form-select">
+                            <option value="">Tous les sports</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="site" class="form-label">Lieu</label>
+                        <select id="site" name="site" asp-items="Html.GetEnumSelectList<Lieu>()" class="form-select">
+                            <option value="">Tous les lieux</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="date" class="form-label">Date</label>
+                        <input id="date" name="date" type="date" class="form-control" />
+                    </div>
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary">Rechercher</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 @foreach (var item in Model) {
 <div class="container my-5">
     <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
