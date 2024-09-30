@@ -71,10 +71,12 @@
 }
 
 <!-- Filtre de recherche -->
-<button id="toggleSearch" class="btn btn-outline-primary mb-3">Vous recherchez un évènement particulier ?</button>
+<div class="text-center">
+<button id="toggleSearch" class="btn olympic-btn fw-bold text-uppercase py-2 px-4 rounded-pill shadow-sm">Vous recherchez un évènement particulier ?</button>
+</div>
 
 <div id="searchForm" style="display: none;">
-    <div class="card mb-4">
+    <div class="card my-4">
         <div class="card-body">
             <form asp-action="Index" method="get">
                 <div class="row">
@@ -94,9 +96,6 @@
                         <label for="date" class="form-label">Date</label>
                         <input id="date" name="date" type="date" class="form-control" />
                     </div>
-                </div>
-                <div class="text-end">
-                    <button type="submit" class="btn btn-primary">Rechercher</button>
                 </div>
             </form>
         </div>
