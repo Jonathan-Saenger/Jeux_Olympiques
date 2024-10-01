@@ -23,7 +23,10 @@ namespace Jeux_Olympiques.Controllers
         // GET: Offers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Offers.ToListAsync());
+            var offers = await _context.Offers
+           .Include(o => o.Events)
+           .ToListAsync();
+            return View(offers);
         }
 
         // GET: Offers/Details/5
@@ -35,6 +38,7 @@ namespace Jeux_Olympiques.Controllers
             }
 
             var offer = await _context.Offers
+                .Include(o => o.Events)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (offer == null)
             {
@@ -48,7 +52,14 @@ namespace Jeux_Olympiques.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
-            ViewData["EventId"] = new SelectList(_context.Events, "Id", "Entitled");
+            var events = _context.Events
+                .Select(e => new {
+                    Id = e.Id,
+                    DisplayText = $"{e.Entitled} - le {e.Date:dd/MM/yyyy} - à {e.Site}"
+                })
+                .ToList();
+
+            ViewData["EventId"] = new SelectList(events, "Id", "DisplayText");
             return View();
         }
 
@@ -66,7 +77,14 @@ namespace Jeux_Olympiques.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EventId"] = new SelectList(_context.Events, "Id", "Entitled", offer.EventId);
+            var events = _context.Events
+                .Select(e => new {
+                    Id = e.Id,
+                    DisplayText = $"{e.Entitled} - le {e.Date:dd/MM/yyyy} - à {e.Site}" 
+                })
+                .ToList();
+
+            ViewData["EventId"] = new SelectList(events, "Id", "DisplayText", offer.EventId); 
             return View(offer);
         }
 

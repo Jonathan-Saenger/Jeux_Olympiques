@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const [day, month, yearAndTime] = eventDateText.split(' ');
                 const [year, time] = yearAndTime.split(',');
                 const [hours, minutes] = time.trim().split(':');
-
                 const monthNames = ["jan.", "fév.", "mar.", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
                 const monthIndex = monthNames.findIndex(m => m.toLowerCase() === month.toLowerCase());
 
@@ -51,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (selectedDate && !eventDate) {
                 isDateMatch = false;
             }
-
             event.style.display = (isSportMatch && isSiteMatch && isDateMatch) ? 'block' : 'none';
         });
     };

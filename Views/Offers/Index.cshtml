@@ -10,51 +10,68 @@
 
 <h1>Retrouvez la liste des offres créées</h1>
 
-<table class="table">
-    <thead>
+<table class="table table-striped table-responsive">
+    <thead class="thead-dark">
         <tr>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Title)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Place)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-            <th></th>
+            <th scope="col">
+                Détails de l'événement
+            </th>
+            <th scope="col">
+                Actions
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Place)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price) €
-            </td>
-            <td>
-                @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin")))
-                {
-                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Modifier</a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
-                }
-                 <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Détail du billet</a> 
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Place)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price) €
+                </td>
+                <td>
+                    <div class="event-details">
+                        <strong>@Html.DisplayFor(modelItem => item.Events.Entitled)</strong><br />
+                        <em>@Html.DisplayFor(modelItem => item.Events.Presentation)</em><br />
+                        <span>@(item.Events.Date.HasValue ? item.Events.Date.Value.ToString("dd/MM/yyyy") : "Date non mentionnée")</span><br />
+                        <span>à @Html.DisplayFor(modelItem => item.Events.Site)</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex justify-content-between">
+                        @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin")))
+                        {
+                            <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@item.Id">Modifier</a>
+                            <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
+                        }
+                        <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@item.Id">Détail du billet</a>
+                    </div>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
 
 
 @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Admin")))
