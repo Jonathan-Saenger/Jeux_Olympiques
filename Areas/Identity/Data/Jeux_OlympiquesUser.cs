@@ -19,12 +19,10 @@ public class Jeux_OlympiquesUser : IdentityUser
     // Méthode pour générer la clé unique
     public void GenerateAccountKey()
     {
-        using (var sha256 = SHA256.Create())
-        {
-            var combinedValue = $"{Id}{FirstName}{LastName}{Email}";
-            var hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(combinedValue));
-            AccountKey = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
-        }
+        using var sha256 = SHA256.Create();
+        var combinedValue = $"{Id}{FirstName}{LastName}{Email}";
+        var hashBytes = SHA256.HashData(Encoding.UTF8.GetBytes(combinedValue));
+        AccountKey = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
     }
 }
 
