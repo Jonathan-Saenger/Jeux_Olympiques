@@ -17,6 +17,8 @@ namespace Jeux_Olympiques.Models
         [Display(Name = "Prix")]
         public decimal? Price { get; set; }
         public User? Publish { get; set; }
+
+        [Display(Name = "Evènement")]
         public int EventId { get; set; }
 
         public Event? Events { get; set; }   

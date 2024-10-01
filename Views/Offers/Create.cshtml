@@ -39,6 +39,7 @@
                 <select asp-for="EventId" class="form-control" asp-items="ViewBag.EventId"></select>
                 <span asp-validation-for="EventId" class="text-danger"></span>
             </div>
+
             <div class="form-group pt-3">
                 <input type="submit" value="Créer l'offre" class="btn btn-success" />
             </div>
@@ -51,5 +52,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

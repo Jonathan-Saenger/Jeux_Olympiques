@@ -14,7 +14,9 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Entitled" class="control-label"></label>
-                <input asp-for="Entitled" class="form-control" />
+                <select asp-for="Entitled" asp-items="Html.GetEnumSelectList<Sport>()">
+                    <option selected="selected" value=""> Choisir un sport </option>
+                </select>
                 <span asp-validation-for="Entitled" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -29,7 +31,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="Site" class="control-label"></label>
-                <input asp-for="Site" class="form-control" />
+                <select asp-for="Site" asp-items="Html.GetEnumSelectList<Lieu>()">
+                    <option selected="selected" value=""> Lieux de l'évènement' </option>
+                </select>
                 <span asp-validation-for="Site" class="text-danger"></span>
             </div>
             <div class="form-group pt-3">

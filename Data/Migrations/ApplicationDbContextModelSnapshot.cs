@@ -159,14 +159,14 @@ namespace Jeux_Olympiques.Data.Migrations
                     b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Entitled")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Entitled")
+                        .HasColumnType("int");
 
                     b.Property<string>("Presentation")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Site")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Site")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -179,25 +179,25 @@ namespace Jeux_Olympiques.Data.Migrations
                         {
                             Id = 4,
                             Date = new DateTime(2024, 9, 11, 10, 15, 0, 0, DateTimeKind.Unspecified),
-                            Entitled = "Tir à l'arc",
-                            Presentation = "8ème de finale du Tir à l'Arc homme",
-                            Site = "Pelouse du Stade de Vincenne"
+                            Entitled = 3,
+                            Presentation = "8ème de finale Escrime Homme",
+                            Site = 3
                         },
                         new
                         {
                             Id = 5,
                             Date = new DateTime(2024, 9, 12, 12, 30, 0, 0, DateTimeKind.Unspecified),
-                            Entitled = "Natation",
+                            Entitled = 2,
                             Presentation = "Quart de finale de Natation Femme 500 mètres",
-                            Site = "Piscine du Parc des Princes"
+                            Site = 4
                         },
                         new
                         {
                             Id = 6,
                             Date = new DateTime(2024, 9, 11, 18, 0, 0, 0, DateTimeKind.Unspecified),
-                            Entitled = "Ping Pong",
+                            Entitled = 7,
                             Presentation = "Finale Homme France - Chine",
-                            Site = "Salle du Gymnase du Luxembourg"
+                            Site = 3
                         });
                 });
 

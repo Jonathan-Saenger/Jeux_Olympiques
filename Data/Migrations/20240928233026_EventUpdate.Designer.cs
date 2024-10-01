@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jeux_Olympiques.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240925195106_NewEventsOffers")]
-    partial class NewEventsOffers
+    [Migration("20240928233026_EventUpdate")]
+    partial class EventUpdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -126,6 +126,25 @@ namespace Jeux_Olympiques.Data.Migrations
                             SecurityStamp = "65K4MQIYK4OSUVYHUY46KRXZ3EUBNO6R",
                             TwoFactorEnabled = false,
                             UserName = "admin@jeuxolympiques.com"
+                        },
+                        new
+                        {
+                            Id = "c7a42f97-4108-4ff9-bdee-326866513a03",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "3967ca6c-926b-4610-93f8-e4ee58de29ef",
+                            Email = "user@jeuxolympiques.com",
+                            EmailConfirmed = true,
+                            FirstName = "Franck",
+                            LastName = "Letesteur",
+                            LockoutEnabled = true,
+                            NormalizedEmail = "USER@JEUXOLYMPIQUES.COM",
+                            NormalizedUserName = "USER@JEUXOLYMPIQUES.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAuQECgPLnpmQ3uGf3DY87bFAf1ny8toJ0OsyDbLnnruDv3QdxbYUe273bLsX39Eeg==",
+                            PhoneNumber = "NULL",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "LZBL3DTGYNXJPNQ3ZJ2JN3ZNI54WA4T3",
+                            TwoFactorEnabled = false,
+                            UserName = "user@jeuxolympiques.com"
                         });
                 });
 
@@ -143,14 +162,14 @@ namespace Jeux_Olympiques.Data.Migrations
                     b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Entitled")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Entitled")
+                        .HasColumnType("int");
 
                     b.Property<string>("Presentation")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Site")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Site")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -163,25 +182,25 @@ namespace Jeux_Olympiques.Data.Migrations
                         {
                             Id = 4,
                             Date = new DateTime(2024, 9, 11, 10, 15, 0, 0, DateTimeKind.Unspecified),
-                            Entitled = "Tir à l'arc",
-                            Presentation = "8ème de finale du Tir à l'Arc homme",
-                            Site = "Pelouse du Stade de Vincenne"
+                            Entitled = 3,
+                            Presentation = "8ème de finale Escrime Homme",
+                            Site = 3
                         },
                         new
                         {
                             Id = 5,
                             Date = new DateTime(2024, 9, 12, 12, 30, 0, 0, DateTimeKind.Unspecified),
-                            Entitled = "Natation",
+                            Entitled = 2,
                             Presentation = "Quart de finale de Natation Femme 500 mètres",
-                            Site = "Piscine du Parc des Princes"
+                            Site = 4
                         },
                         new
                         {
                             Id = 6,
                             Date = new DateTime(2024, 9, 11, 18, 0, 0, 0, DateTimeKind.Unspecified),
-                            Entitled = "Ping Pong",
+                            Entitled = 7,
                             Presentation = "Finale Homme France - Chine",
-                            Site = "Salle du Gymnase du Luxembourg"
+                            Site = 3
                         });
                 });
 
