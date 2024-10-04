@@ -23,6 +23,7 @@ namespace Jeux_Olympiques.Models
 
         public Event? Events { get; set; }   
         public List<Ticket>? IsContained { get; set; }
+        public List<Cart>? Carts { get; set; }
     }
 
 }

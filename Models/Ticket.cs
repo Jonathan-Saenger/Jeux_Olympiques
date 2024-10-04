@@ -9,6 +9,5 @@
         public string? TicketKey { get; set; }
         public User? Buyer { get; set; }
         public Offer? Contains { get; set; }
-
     }
 }

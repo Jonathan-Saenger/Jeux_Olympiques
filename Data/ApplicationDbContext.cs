@@ -16,6 +16,7 @@ namespace Jeux_Olympiques.Data
         public DbSet<Event>? Events { get; set; }
         public DbSet<Offer>? Offers { get; set; }
         public DbSet<Ticket>? Tickets { get; set; }
+        public DbSet<Cart>? Carts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
