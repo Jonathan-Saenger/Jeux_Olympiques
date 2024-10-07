@@ -4,7 +4,7 @@ namespace Jeux_Olympiques.Models
 {
     public class Offer
     {
-        public int Id { get; set; }
+        public int OfferId { get; set; }
 
         [Display(Name = "Titre")]
         public string? Title { get; set; }

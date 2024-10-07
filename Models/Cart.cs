@@ -1,4 +1,6 @@
-﻿namespace Jeux_Olympiques.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Jeux_Olympiques.Models
 
 {
     /// <summary>
@@ -7,34 +9,14 @@
     /// </summary>
     public class Cart
     {
-        /// <summary>
-        /// Identifiant unique du panier.
-        /// </summary>
-        public int Id { get; set; }
-
-        /// <summary>
-        /// Quantité d'articles dans le panier.
-        /// </summary>
+        [Key]
+        public int RecordId { get; set; }
         public int Quantity { get; set; }
-
-        /// <summary>
-        /// Prix total du panier en fonction de la quantité et de l'offre.
-        /// </summary>
         public decimal Price { get; set; }
-
-        /// <summary>
-        /// Date et heure de création du panier.
-        /// </summary>
         public System.DateTime DateCreated { get; set; }
-
-        /// <summary>
-        /// Offre associée au panier, qui peut être null si aucune offre n'est appliquée.
-        /// </summary>
-        public Offer? Offer { get; set; }
-
-        /// <summary>
-        /// Utilisateur propriétaire du panier, qui peut être null s'il n'est pas encore attribué à un utilisateur.
-        /// </summary>
+        public virtual Offer? Offer { get; set; }
         public User? User { get; set; }
+        public string? CartId { get; internal set; }
+        public int OfferId { get; internal set; }
     }
 }

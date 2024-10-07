@@ -17,6 +17,7 @@ namespace Jeux_Olympiques.Data
         public DbSet<Offer>? Offers { get; set; }
         public DbSet<Ticket>? Tickets { get; set; }
         public DbSet<Cart>? Carts { get; set; }
+        public DbSet<TicketDetail> TicketDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -118,7 +119,7 @@ namespace Jeux_Olympiques.Data
             modelBuilder.Entity<Offer>().HasData(
                 new Offer
                 {
-                    Id = 14,
+                    OfferId = 14,
                     Title = "OFFRE SOLO",
                     Description = "Entrée pour 1 personne",
                     Place = "Placement libre",
@@ -127,7 +128,7 @@ namespace Jeux_Olympiques.Data
                 },
                 new Offer
                 {
-                    Id = 15,
+                    OfferId = 15,
                     Title = "OFFRE DUO",
                     Description = "Entrée pour 2 personnes",
                     Place = "Placement libre",
@@ -136,7 +137,7 @@ namespace Jeux_Olympiques.Data
                 },
                 new Offer
                 {
-                    Id = 16,
+                    OfferId = 16,
                     Title = "OFFRE FAMILLE",
                     Description = "Entrée pour 4 personnes",
                     Place = "Placement libre",
