@@ -6,6 +6,35 @@
 <div id="update-message">
 </div>
 
+<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+        integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+        crossorigin="anonymous">
+</script>
+<script>
+    $(document).ready(function () {
+        $(".RemoveLink").click(function (e) {
+            e.preventDefault();
+            var recordId = $(this).data("id");
+            $.ajax({
+                url: '/ShoppingCart/RemoveFromCart', 
+                type: 'POST', 
+                data: { id: recordId },
+                success: function (response) {
+                    $("#row-" + recordId).fadeOut('slow', function () {
+                        $(this).remove();
+                    });
+                    $("#cart-total").text(response.cartTotal + " €");
+                    $("#item-count-" + recordId).text(response.itemCount);
+                    $("#update-message").html("<div class='alert alert-success'>" + response.message + "</div>");
+                },
+                error: function () {
+                    $("#update-message").html("<div class='alert alert-danger'>Erreur lors de la suppression de l'élément.</div>");
+                }
+            });
+        });
+    });
+</script>
+
 <div class="container mt-4">
     <h3 class="text-center mb-4">Récapitulatif de votre commande </h3>
     <table class="table table-bordered table-striped table-hover">
@@ -23,7 +52,7 @@
             @foreach (var item in Model.CartItems)
             {
                 <tr id="row-@item.RecordId">
-                    @if (item.Offer != null) // Vérification que l'offre est bien définie
+                    @if (item.Offer != null) 
                     {
                         <td>@item.Offer.Events.Entitled</td>
                         <td>@item.Offer.Events.Presentation</td>
@@ -52,6 +81,3 @@
         <a href="@Url.Action("AddressAndPayment", "Checkout")" class="btn btn-lg btn-success">Payer ma commande</a>
     </div>
 </div>
-
-
-

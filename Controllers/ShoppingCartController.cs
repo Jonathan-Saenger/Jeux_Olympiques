@@ -47,9 +47,16 @@ namespace Jeux_Olympiques.Controllers
         public async Task<ActionResult> RemoveFromCart(int id)
         {
             var cartItem = await _context.Carts
-                .SingleAsync(item => item.RecordId == id);
+               .Include(c => c.Offer) 
+               .SingleOrDefaultAsync(item => item.RecordId == id);
 
-            string offerName = cartItem.Offer.Title;
+            if (cartItem == null)
+            {
+                return NotFound();
+            }
+
+            
+            string offerName = cartItem.Offer?.Title ?? "Offre inconnue"; 
             int itemQuantity = _cart.RemoveFromCart(id);
 
             var results = new ShoppingCartRemoveViewModel
