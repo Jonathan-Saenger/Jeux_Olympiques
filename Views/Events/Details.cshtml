@@ -31,7 +31,9 @@
                             <h4 class="card-title pricing-card-title">@Html.DisplayFor(modelItem => item.Price) €</h4>
                             <h4>@Html.DisplayFor(modelItem => item.Description)</h4>
                             <h4>@Html.DisplayFor(modelItem => item.Place)</h4>
-                            <button type="button" class="w-100 btn btn-lg btn-outline-primary">Acheter</button>
+                            <p class="w-100 btn btn-lg btn-outline-primary">
+                                @Html.ActionLink("Ajouter au panier", "AddToCart", "ShoppingCart", new { id = item.OfferId }, "")
+                            </p>
                         </div>
                     </div>
                 </div>

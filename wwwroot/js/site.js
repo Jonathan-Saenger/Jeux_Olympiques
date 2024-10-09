@@ -58,6 +58,3 @@ document.addEventListener('DOMContentLoaded', () => {
     siteSelect.addEventListener('change', filterEvents);
     dateInput.addEventListener('input', filterEvents);
 });
-
-
-

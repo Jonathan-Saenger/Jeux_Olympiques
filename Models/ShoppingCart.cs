@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
 using Jeux_Olympiques.Areas.Identity.Data;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Jeux_Olympiques.Models
@@ -100,8 +101,11 @@ namespace Jeux_Olympiques.Models
         }
         public List<Cart> GetCartItems()
         {
-            return _context.Carts.Where(
-                cart => cart.CartId == ShoppingCartId).ToList();
+            return _context.Carts
+                .Include(c => c.Offer)
+                .ThenInclude(o => o.Events)
+                .Where(c => c.CartId == ShoppingCartId)
+                .ToList();
         }
         public int GetQuantity() //Récupérer la quantité de chaque item dans le panier
         {
