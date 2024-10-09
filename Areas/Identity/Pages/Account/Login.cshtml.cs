@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Jeux_Olympiques.Areas.Identity.Data;
+using Jeux_Olympiques.Models;
+using Jeux_Olympiques.Data;
 
 namespace Jeux_Olympiques.Areas.Identity.Pages.Account
 {
@@ -22,11 +24,13 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<Jeux_OlympiquesUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private ApplicationDbContext _context;
 
-        public LoginModel(SignInManager<Jeux_OlympiquesUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<Jeux_OlympiquesUser> signInManager, ILogger<LoginModel> logger, ApplicationDbContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         /// <summary>
@@ -101,6 +105,16 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
 
             ReturnUrl = returnUrl;
         }
+        /// <summary>
+        /// Récupération du panier dans le compte de l'utilisateur connecté
+        /// </summary>
+        /// <param name="userName"></param>
+        private void MigrateShoppingCart(string userName)
+        {
+            var cart = ShoppingCart.GetCart(HttpContext, _context);
+            cart.MigrateCart(userName);
+            HttpContext.Session.SetString(ShoppingCart.CartSessionKey, userName);
+        }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
@@ -110,12 +124,11 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    MigrateShoppingCart(Input.Email); // Récupération du panier sur le compte de l'utilisateur.
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
