@@ -26,6 +26,8 @@
                     $("#cart-total").text(response.cartTotal + " €");
                     $("#item-count-" + recordId).text(response.itemCount);
                     $("#update-message").html("<div class='alert alert-success'>" + response.message + "</div>");
+                    $("#cart-count").text(response.cartCount);
+                    $("#cart-summary").text(response.cartTotal + " €")
                 },
                 error: function () {
                     $("#update-message").html("<div class='alert alert-danger'>Erreur lors de la suppression de l'élément.</div>");

@@ -56,7 +56,6 @@ namespace Jeux_Olympiques.Controllers
                 return NotFound();
             }
 
-            
             string offerName = cartItem.Offer?.Title ?? "Offre inconnue"; 
             int itemQuantity = _cart.RemoveFromCart(id);
 

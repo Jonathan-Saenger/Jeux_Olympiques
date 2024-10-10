@@ -1,8 +1,7 @@
 ﻿@using Jeux_Olympiques.ViewModels
 @model CartSummaryViewModel
-
 <a asp-controller="ShoppingCart" asp-action="Index" class="nav-link text-dark">
     <i class="fas fa-shopping-cart"></i> Panier
-    <span class="badge bg-secondary">@Model.CartCount</span>
-    <span>@Model.CartTotal.ToString("C")</span>
+    <span id="cart-count" class="badge bg-secondary">@Model.CartCount</span>
+    <span id="cart-summary">@Model.CartTotal.ToString("C")</span>
 </a>
