@@ -4,6 +4,10 @@
 @inject UserManager<Jeux_OlympiquesUser> UserManager
 
 <ul class="navbar-nav">
+    <li>
+        @await Component.InvokeAsync("CartSummary")
+    </li>
+
 @if (SignInManager.IsSignedIn(User))
 {
     Jeux_OlympiquesUser? user = await UserManager.GetUserAsync(User);

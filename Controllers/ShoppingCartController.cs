@@ -2,6 +2,7 @@
 using Jeux_Olympiques.Models;
 using Jeux_Olympiques.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 
@@ -18,7 +19,7 @@ namespace Jeux_Olympiques.Controllers
         }
 
         //GET: /ShoppingCart/
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var viewModel = new ShoppingCartViewModel
             {
@@ -72,8 +73,10 @@ namespace Jeux_Olympiques.Controllers
         }
 
         //GET: /ShoppingCart/CartSummary
+
         public ActionResult CartSummary()
         {
+            var cart = _context.Carts;
             ViewData["CartCount"] = _cart.GetQuantity();
             return PartialView("CartSummary");
         }
