@@ -1,6 +1,7 @@
 ﻿using System.Security.Cryptography;
 using Microsoft.AspNetCore.Identity;
 using System.Text;
+using Jeux_Olympiques.Models;
 
 namespace Jeux_Olympiques.Areas.Identity.Data;
 
@@ -9,6 +10,8 @@ namespace Jeux_Olympiques.Areas.Identity.Data;
 /// </summary>
 public class Jeux_OlympiquesUser : IdentityUser
 {
+    public static User? Name { get; internal set; }
+
     /// <summary>
     /// Ajout du champ Prénom
     /// </summary>
