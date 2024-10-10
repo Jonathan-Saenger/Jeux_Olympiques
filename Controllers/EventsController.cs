@@ -20,7 +20,7 @@ namespace Jeux_Olympiques.Controllers
             _context = context;
         }
 
-        // GET: Events
+        /// GET: Events
         public async Task<IActionResult> Index()
         {
             return View(await _context.Events.ToListAsync());

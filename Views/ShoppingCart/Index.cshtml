@@ -1,0 +1,85 @@
+﻿@model Jeux_Olympiques.ViewModels.ShoppingCartViewModel
+@{
+    ViewBag.Title = "Shopping Cart";
+}
+
+<div id="update-message">
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+        integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+        crossorigin="anonymous">
+</script>
+<script>
+    $(document).ready(function () {
+        $(".RemoveLink").click(function (e) {
+            e.preventDefault();
+            var recordId = $(this).data("id");
+            $.ajax({
+                url: '/ShoppingCart/RemoveFromCart', 
+                type: 'POST', 
+                data: { id: recordId },
+                success: function (response) {
+                    $("#row-" + recordId).fadeOut('slow', function () {
+                        $(this).remove();
+                    });
+                    $("#cart-total").text(response.cartTotal + " €");
+                    $("#item-count-" + recordId).text(response.itemCount);
+                    $("#update-message").html("<div class='alert alert-success'>" + response.message + "</div>");
+                    $("#cart-count").text(response.cartCount);
+                    $("#cart-summary").text(response.cartTotal + " €")
+                },
+                error: function () {
+                    $("#update-message").html("<div class='alert alert-danger'>Erreur lors de la suppression de l'élément.</div>");
+                }
+            });
+        });
+    });
+</script>
+
+<div class="container mt-4">
+    <h3 class="text-center mb-4">Récapitulatif de votre commande </h3>
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Évènement</th>
+                <th scope="col">Description</th>
+                <th scope="col">Offre</th>
+                <th scope="col">Prix (unité)</th>
+                <th scope="col">Quantité</th>
+                <th scope="col" class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                <tr id="row-@item.RecordId">
+                    @if (item.Offer != null) 
+                    {
+                        <td>@item.Offer.Events.Entitled</td>
+                        <td>@item.Offer.Events.Presentation</td>
+                        <td>@item.Offer.Title</td>
+                        <td>@item.Offer.Price €</td>
+                        <td id="item-count-@item.RecordId">@item.Quantity</td>
+                        <td class="text-center">
+                            <a href="#" class="btn btn-danger btn-sm RemoveLink" data-id="@item.RecordId">Retirer</a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td colspan="6" class="text-center text-danger">Offre non trouvée</td> <!-- Message d'erreur en cas d'Offer null -->
+                    }
+                </tr>
+            }
+            <tr class="table-info">
+                <td colspan="3" class="text-right"><strong>Total</strong></td>
+                <td colspan="2" id="cart-total">@Model.CartTotal €</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="text-center my-4">
+        <a href="@Url.Action("AddressAndPayment", "Checkout")" class="btn btn-lg btn-success">Payer ma commande</a>
+    </div>
+</div>

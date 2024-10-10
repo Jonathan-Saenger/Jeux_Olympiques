@@ -6,6 +6,7 @@ using Jeux_Olympiques.Areas.Identity.Data;
 using WebPWrecover.Services;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using Jeux_Olympiques.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,17 @@ builder.Services.AddDefaultIdentity<Jeux_OlympiquesUser>(options => options.Sign
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+// Enregistrement du service ShoppingCart
+builder.Services.AddScoped<ShoppingCart>(sp =>
+    ShoppingCart.GetCart(sp.GetRequiredService<IHttpContextAccessor>().HttpContext,
+                         sp.GetRequiredService<ApplicationDbContext>()));
+
+// Nécessaire pour accéder au HttpContext
+builder.Services.AddHttpContextAccessor();
+
+// Ajouter les sessions
+builder.Services.AddSession();
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
@@ -52,8 +64,8 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 

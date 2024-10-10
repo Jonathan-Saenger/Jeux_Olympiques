@@ -9,6 +9,7 @@ namespace Jeux_Olympiques.Models
         public List<Ticket>? BuyTicket { get; set; }
         public List<Event>? PublishEvent { get; set; }
         public List<Offer>? CreateOffer { get; set; }
+        public List<Cart>? ShoppingCart { get; set; }
 
     }
 }

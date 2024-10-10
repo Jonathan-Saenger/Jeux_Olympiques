@@ -18,7 +18,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
+using Jeux_Olympiques.Models;
+using Jeux_Olympiques.Data;   
 
 namespace Jeux_Olympiques.Areas.Identity.Pages.Account
 {
@@ -30,13 +31,15 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<Jeux_OlympiquesUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _context;
 
         public RegisterModel(
             UserManager<Jeux_OlympiquesUser> userManager,
             IUserStore<Jeux_OlympiquesUser> userStore,
             SignInManager<Jeux_OlympiquesUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +47,7 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         /// <summary>
@@ -121,7 +125,17 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
-
+        private void MigrateShoppingCart(string userName)
+        {
+            var cart = ShoppingCart.GetCart(HttpContext, _context);
+            cart.MigrateCart(userName);
+            HttpContext.Session.SetString(ShoppingCart.CartSessionKey, userName);
+        }
+        /// <summary>
+        /// Dans cet API : Création de la clé unique, récupération du panier utilisateur, envoi de l'email de validation avec Sendmail
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
@@ -129,17 +143,17 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName; 
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-
-                //Création de la clé unique utilisateur
-                user.GenerateAccountKey();
+   
+                user.GenerateAccountKey(); //Création de la clé unique utilisateur
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
+                MigrateShoppingCart(Input.Email); // Récupération du panier sur le compte de l'utilisateur.
 
                 if (result.Succeeded)
                 {

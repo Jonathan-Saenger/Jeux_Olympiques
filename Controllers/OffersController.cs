@@ -39,7 +39,7 @@ namespace Jeux_Olympiques.Controllers
 
             var offer = await _context.Offers
                 .Include(o => o.Events)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.OfferId == id);
             if (offer == null)
             {
                 return NotFound();
@@ -112,7 +112,7 @@ namespace Jeux_Olympiques.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Place,Price")] Offer offer)
         {
-            if (id != offer.Id)
+            if (id != offer.OfferId)
             {
                 return NotFound();
             }
@@ -126,7 +126,7 @@ namespace Jeux_Olympiques.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OfferExists(offer.Id))
+                    if (!OfferExists(offer.OfferId))
                     {
                         return NotFound();
                     }
@@ -149,7 +149,7 @@ namespace Jeux_Olympiques.Controllers
             }
 
             var offer = await _context.Offers
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.OfferId == id);
             if (offer == null)
             {
                 return NotFound();
@@ -176,7 +176,7 @@ namespace Jeux_Olympiques.Controllers
 
         private bool OfferExists(int id)
         {
-            return _context.Offers.Any(e => e.Id == id);
+            return _context.Offers.Any(e => e.OfferId == id);
         }
     }
 }

@@ -4,6 +4,7 @@ using Jeux_Olympiques.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jeux_Olympiques.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241004234033_AddCartEntity")]
+    partial class AddCartEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,19 +150,16 @@ namespace Jeux_Olympiques.Data.Migrations
 
             modelBuilder.Entity("Jeux_Olympiques.Models.Cart", b =>
                 {
-                    b.Property<int>("RecordId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RecordId"));
-
-                    b.Property<string>("CartId")
-                        .HasColumnType("nvarchar(max)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OfferId")
+                    b.Property<int?>("OfferId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
@@ -171,7 +171,7 @@ namespace Jeux_Olympiques.Data.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("RecordId");
+                    b.HasKey("Id");
 
                     b.HasIndex("OfferId");
 
@@ -238,11 +238,11 @@ namespace Jeux_Olympiques.Data.Migrations
 
             modelBuilder.Entity("Jeux_Olympiques.Models.Offer", b =>
                 {
-                    b.Property<int>("OfferId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OfferId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -262,7 +262,7 @@ namespace Jeux_Olympiques.Data.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("OfferId");
+                    b.HasKey("Id");
 
                     b.HasIndex("EventId");
 
@@ -273,7 +273,7 @@ namespace Jeux_Olympiques.Data.Migrations
                     b.HasData(
                         new
                         {
-                            OfferId = 14,
+                            Id = 14,
                             Description = "Entrée pour 1 personne",
                             EventId = 4,
                             Place = "Placement libre",
@@ -282,7 +282,7 @@ namespace Jeux_Olympiques.Data.Migrations
                         },
                         new
                         {
-                            OfferId = 15,
+                            Id = 15,
                             Description = "Entrée pour 2 personnes",
                             EventId = 4,
                             Place = "Placement libre",
@@ -291,7 +291,7 @@ namespace Jeux_Olympiques.Data.Migrations
                         },
                         new
                         {
-                            OfferId = 16,
+                            Id = 16,
                             Description = "Entrée pour 4 personnes",
                             EventId = 4,
                             Place = "Placement libre",
@@ -302,16 +302,16 @@ namespace Jeux_Olympiques.Data.Migrations
 
             modelBuilder.Entity("Jeux_Olympiques.Models.Ticket", b =>
                 {
-                    b.Property<int>("TicketId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TicketId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BuyerId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("ContainsOfferId")
+                    b.Property<int?>("ContainsId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -323,48 +323,16 @@ namespace Jeux_Olympiques.Data.Migrations
                     b.Property<string>("QrCode")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("TicketDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("TicketKey")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("TicketId");
+                    b.HasKey("Id");
 
                     b.HasIndex("BuyerId");
 
-                    b.HasIndex("ContainsOfferId");
+                    b.HasIndex("ContainsId");
 
                     b.ToTable("Tickets");
-                });
-
-            modelBuilder.Entity("Jeux_Olympiques.Models.TicketDetail", b =>
-                {
-                    b.Property<int>("TicketDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TicketDetailId"));
-
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OfferId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TicketId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("TicketDetailId");
-
-                    b.HasIndex("OfferId");
-
-                    b.HasIndex("TicketId");
-
-                    b.ToTable("TicketDetails");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -534,9 +502,7 @@ namespace Jeux_Olympiques.Data.Migrations
                 {
                     b.HasOne("Jeux_Olympiques.Models.Offer", "Offer")
                         .WithMany("Carts")
-                        .HasForeignKey("OfferId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OfferId");
 
                     b.HasOne("Jeux_Olympiques.Models.User", "User")
                         .WithMany("ShoppingCart")
@@ -581,30 +547,11 @@ namespace Jeux_Olympiques.Data.Migrations
 
                     b.HasOne("Jeux_Olympiques.Models.Offer", "Contains")
                         .WithMany("IsContained")
-                        .HasForeignKey("ContainsOfferId");
+                        .HasForeignKey("ContainsId");
 
                     b.Navigation("Buyer");
 
                     b.Navigation("Contains");
-                });
-
-            modelBuilder.Entity("Jeux_Olympiques.Models.TicketDetail", b =>
-                {
-                    b.HasOne("Jeux_Olympiques.Models.Offer", "Offer")
-                        .WithMany()
-                        .HasForeignKey("OfferId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Jeux_Olympiques.Models.Ticket", "Ticket")
-                        .WithMany("TicketDetails")
-                        .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Offer");
-
-                    b.Navigation("Ticket");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -668,11 +615,6 @@ namespace Jeux_Olympiques.Data.Migrations
                     b.Navigation("Carts");
 
                     b.Navigation("IsContained");
-                });
-
-            modelBuilder.Entity("Jeux_Olympiques.Models.Ticket", b =>
-                {
-                    b.Navigation("TicketDetails");
                 });
 
             modelBuilder.Entity("Jeux_Olympiques.Models.User", b =>
