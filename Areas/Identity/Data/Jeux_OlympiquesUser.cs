@@ -1,6 +1,7 @@
 ﻿using System.Security.Cryptography;
 using Microsoft.AspNetCore.Identity;
 using System.Text;
+using Jeux_Olympiques.Models;
 
 namespace Jeux_Olympiques.Areas.Identity.Data;
 
@@ -9,6 +10,8 @@ namespace Jeux_Olympiques.Areas.Identity.Data;
 /// </summary>
 public class Jeux_OlympiquesUser : IdentityUser
 {
+    public static User? Name { get; internal set; }
+
     /// <summary>
     /// Ajout du champ Prénom
     /// </summary>
@@ -24,6 +27,8 @@ public class Jeux_OlympiquesUser : IdentityUser
     /// </summary>
     [PersonalData]
     public string? AccountKey { get; private set; }
+    public List<Ticket> BuyTicket { get; internal set; }
+
     /// <summary>
     /// Génère une clé unique (AccountKey) pour l'utilisateur en utilisant une chaîne combinant
     /// l'Id de l'utilisateur, son prénom (FirstName), son nom (LastName) et son Email.

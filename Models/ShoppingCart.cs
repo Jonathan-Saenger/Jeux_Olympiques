@@ -127,6 +127,10 @@ namespace Jeux_Olympiques.Models
         {
             decimal ticketTotal = 0;
 
+            //Sauvegarde du ticket
+            _context.Tickets.Add(ticket);
+            _context.SaveChanges(); 
+
             var cartItems = GetCartItems();
             foreach (var item in cartItems)
             {

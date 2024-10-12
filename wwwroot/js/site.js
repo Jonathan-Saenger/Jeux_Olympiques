@@ -12,9 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const events = document.querySelectorAll('.container.my-5');
 
     toggleButton.addEventListener('click', () => {
-        const { display } = searchForm.style;
-        searchForm.style.display = display === 'none' ? 'block' : 'none';
-        toggleButton.textContent = display === 'none'
+        const isHidden = searchForm.style.display === 'none';
+        searchForm.style.display = isHidden ? 'block' : 'none';
+        toggleButton.textContent = isHidden
             ? 'Masquer le formulaire de recherche'
             : 'Rechercher un évènement selon vos critères';
     });
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterEvents = () => {
         const selectedSport = sportSelect.value;
         const selectedSite = siteSelect.value;
-        const selectedDate = dateInput.value;
+        const selectedDate = dateInput.value ? new Date(dateInput.value) : null;
 
         events.forEach(event => {
             const eventSport = event.querySelector('.text-body-emphasis').innerText.trim();
@@ -32,29 +32,19 @@ document.addEventListener('DOMContentLoaded', () => {
             let eventDate = null;
             if (eventDateText !== "Date non spécifiée") {
                 const [day, month, yearAndTime] = eventDateText.split(' ');
-                const [year, time] = yearAndTime.split(',');
-                const [hours, minutes] = time.trim().split(':');
+                const [year] = yearAndTime.split(',');
                 const monthNames = ["jan.", "fév.", "mar.", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
-                const monthIndex = monthNames.findIndex(m => m.toLowerCase() === month.toLowerCase());
-
-                eventDate = new Date(parseInt(year), monthIndex, parseInt(day));
+                const monthIndex = monthNames.indexOf(month.toLowerCase());
+                eventDate = new Date(year, monthIndex, parseInt(day));
             }
 
-            const isSportMatch = selectedSport === '' || eventSport === sportSelect.options[sportSelect.selectedIndex].text;
-            const isSiteMatch = selectedSite === '' || eventSite === siteSelect.options[siteSelect.selectedIndex].text;
-            let isDateMatch = true;
+            const isSportMatch = !selectedSport || eventSport === sportSelect.selectedOptions[0].text;
+            const isSiteMatch = !selectedSite || eventSite === siteSelect.selectedOptions[0].text;
+            const isDateMatch = !selectedDate || (eventDate && selectedDate.toDateString() === eventDate.toDateString());
 
-            if (selectedDate && eventDate) {
-                const selectedDateObj = new Date(selectedDate);
-                isDateMatch = selectedDateObj.toDateString() === eventDate.toDateString();
-            } else if (selectedDate && !eventDate) {
-                isDateMatch = false;
-            }
             event.style.display = (isSportMatch && isSiteMatch && isDateMatch) ? 'block' : 'none';
         });
     };
 
-    sportSelect.addEventListener('change', filterEvents);
-    siteSelect.addEventListener('change', filterEvents);
-    dateInput.addEventListener('input', filterEvents);
+    [sportSelect, siteSelect, dateInput].forEach(el => el.addEventListener('change', filterEvents));
 });

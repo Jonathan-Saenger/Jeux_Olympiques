@@ -575,7 +575,7 @@ namespace Jeux_Olympiques.Data.Migrations
 
             modelBuilder.Entity("Jeux_Olympiques.Models.Ticket", b =>
                 {
-                    b.HasOne("Jeux_Olympiques.Models.User", "Buyer")
+                    b.HasOne("Jeux_Olympiques.Areas.Identity.Data.Jeux_OlympiquesUser", "Buyer")
                         .WithMany("BuyTicket")
                         .HasForeignKey("BuyerId");
 
@@ -658,6 +658,11 @@ namespace Jeux_Olympiques.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Jeux_Olympiques.Areas.Identity.Data.Jeux_OlympiquesUser", b =>
+                {
+                    b.Navigation("BuyTicket");
+                });
+
             modelBuilder.Entity("Jeux_Olympiques.Models.Event", b =>
                 {
                     b.Navigation("Offers");
@@ -677,8 +682,6 @@ namespace Jeux_Olympiques.Data.Migrations
 
             modelBuilder.Entity("Jeux_Olympiques.Models.User", b =>
                 {
-                    b.Navigation("BuyTicket");
-
                     b.Navigation("CreateOffer");
 
                     b.Navigation("PublishEvent");
