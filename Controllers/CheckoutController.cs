@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 using System;
 using System.Net.Sockets;
 using System.Security.Claims;
+using System.Text;
 
 namespace Jeux_Olympiques.Controllers
 {
@@ -60,6 +62,9 @@ namespace Jeux_Olympiques.Controllers
                 TicketDate = DateTime.Now
             };
 
+            //Générer la clé unique pour le ticket
+            ticket.TicketKey = GenerateTicketKey(ticket);
+
             //Générer le ticket basé sur le panier
             cart.CreateTicket(ticket);
 
@@ -85,6 +90,14 @@ namespace Jeux_Olympiques.Controllers
 
             // Affichage du ticket 
             return View(ticket);
+        }
+
+        private string GenerateTicketKey(Ticket ticket)
+        {
+            using var sha256 = SHA256.Create();
+            var combinedValue = $"{ticket.TicketId}{ticket.Name}{ticket.Price}{ticket.TicketDate:yyyyMMddHHmmss}";
+            var hashBytes = SHA256.HashData(Encoding.UTF8.GetBytes(combinedValue));
+            return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
         }
     }
 }
