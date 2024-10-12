@@ -1,85 +1,90 @@
-﻿using Jeux_Olympiques.Areas.Identity.Data;
+﻿using EllipticCurve.Utils;
+using Jeux_Olympiques.Areas.Identity.Data;
 using Jeux_Olympiques.Data;
 using Jeux_Olympiques.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Net.Sockets;
+using System.Security.Claims;
 
 namespace Jeux_Olympiques.Controllers
 {
     [Authorize]
     public class CheckoutController : Controller
     {
-
-        private readonly ApplicationDbContext _context;     
+        private readonly ApplicationDbContext _context;
 
         public CheckoutController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        const string PromoCode = "PAIEMENT";
         //
-        // GET: /Checkout/AdressAndPayment
-        public IActionResult AdresseAndPayment()
+        // GET: /Checkout/AddressAndPayment
+        [HttpGet]
+        public IActionResult AddressAndPayment()
         {
-            return View();
+            var cart = ShoppingCart.GetCart(this.HttpContext, _context);
+            var cartItems = cart.GetCartItems();
+
+            if (cartItems == null || !cartItems.Any())
+            {
+                //Redirection si le panier est vide
+                return RedirectToAction("Index", "ShoppingCart");
+            }
+            //Affichage du formulaire fictif pour finaliser
+            return View(cart);
         }
 
-        //POST: /Checkout/AdressAndPayment
+        // POST : /Checkout/CompletePayment
         [HttpPost]
-        public async Task<IActionResult> AdressAndPayment(IFormCollection values)
+        public IActionResult CompletePayment()
         {
-            var ticket = new Ticket();
-            await TryUpdateModelAsync(ticket);
+            var cart = ShoppingCart.GetCart(this.HttpContext, _context);
+            var cartItems = cart.GetCartItems();
 
-            try
+            if (cartItems == null || !cartItems.Any())
             {
-                if (string.Equals(values["PromoCode"], PromoCode, StringComparison.OrdinalIgnoreCase) == false)
-                {
-                    return View(ticket);
-                }
-                else
-                {
-                    ticket.Buyer = Jeux_OlympiquesUser.Name;
-                    ticket.TicketDate = DateTime.Now;
-
-                    _context.Tickets.Add(ticket);
-                    await _context.SaveChangesAsync();
-
-                    var cart = ShoppingCart.GetCart(HttpContext, _context);
-                    cart.CreateTicket(ticket);
-
-                    return RedirectToAction("Complete", new { id = ticket.TicketId });
-                }
+                //Redirection si le panier est vide
+                return RedirectToAction("Index", "ShoppingCart");
             }
-            catch
+
+            //Création du ticket fictif pour l'utilisateur connecté
+            var userId = User.Identity.Name;
+            var ticket = new Ticket
             {
-                return View(ticket);
-            }
+                Buyer = _context.Users.FirstOrDefault(u => u.UserName == userId),
+                TicketDate = DateTime.Now
+            };
+
+            //Générer le ticket basé sur le panier
+            cart.CreateTicket(ticket);
+
+            //Redirection vers la page qui affiche le ticket
+            return RedirectToAction("Ticket", new { ticketId = ticket.TicketId });
         }
 
-
-        /// <summary>
-        /// Cette API vérifie que la commande appartient bien à l'utilisateur connecté avant d'afficher le numéro de commande de confirmation
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<ActionResult> CompleteAsync(int id)
+        // GET: /Checkout/Ticket
+        [HttpGet]
+        public IActionResult Ticket(int ticketId)
         {
-            //Valider que le client est propriétaire de cette commande 
-            bool isValid = await _context.Tickets.AnyAsync(
-                o => o.TicketId == id && o.Buyer == Jeux_OlympiquesUser.Name);
+            var ticket = _context.Tickets
+                .Include(t => t.TicketDetails)
+                .ThenInclude(td => td.Offer)
+                .ThenInclude(o => o.Events)
+                .Include(t => t.Buyer)
+                .FirstOrDefault(t => t.TicketId == ticketId);
 
-            if (isValid)
+            if (ticket == null)
             {
-                return View(id);
+                return RedirectToAction("Index", "ShoppingCart");
             }
-            else
-            {
-                return View("Error");
-            }
+
+            // Affichage du ticket 
+            return View(ticket);
         }
     }
 }

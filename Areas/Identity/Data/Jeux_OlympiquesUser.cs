@@ -27,6 +27,8 @@ public class Jeux_OlympiquesUser : IdentityUser
     /// </summary>
     [PersonalData]
     public string? AccountKey { get; private set; }
+    public List<Ticket> BuyTicket { get; internal set; }
+
     /// <summary>
     /// Génère une clé unique (AccountKey) pour l'utilisateur en utilisant une chaîne combinant
     /// l'Id de l'utilisateur, son prénom (FirstName), son nom (LastName) et son Email.

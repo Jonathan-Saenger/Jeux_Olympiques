@@ -1,0 +1,49 @@
+﻿@model Jeux_Olympiques.Models.Ticket
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-lg border-0 rounded">
+                <div class="card-header bg-success text-white text-center py-4">
+                    <h2 class="card-title mb-0">Votre E-Billet</h2>
+                    <p class="lead">Merci pour votre achat, @Model.Buyer.FirstName !</p>
+                </div>
+
+                <div class="card-body p-5">
+                    <h4 class="mb-4">Détails du billet :</h4>
+                    <ul class="list-group list-group-flush mb-4">
+                        @foreach (var detail in Model.TicketDetails)
+                        {
+                            <li class="list-group-item">
+                                <h5 class="mb-2 text-primary">@detail.Offer.Events.Entitled</h5>
+                                <p class="mb-1"><strong>Présentation :</strong> @detail.Offer.Events.Presentation</p>
+                                <p class="mb-1"><strong>Description :</strong> @detail.Offer.Description</p>
+                                <p class="mb-1"><strong>Lieu :</strong> @Html.DisplayFor(m => detail.Offer.Events.Site)</p>
+                                <p class="mb-1"><strong>Place :</strong> @detail.Offer.Place</p>
+                                <p class="mb-1">
+                                    <strong>@detail.Offer.Title :</strong> @detail.UnitPrice € x @detail.Count
+                                </p>
+                            </li>
+                        }
+                    </ul>
+
+                    <p class="text-center"><strong>Total payé : <span class="text-success">@Model.Price €</span></strong></p>
+
+                    <div class="alert alert-warning mt-4" role="alert">
+                        <small>
+                            Ce e-billet est nominatif et personnel. Il ne peut être revendu ni transféré à un tiers.
+                            Toute reproduction ou revente du e-billet sans l'autorisation de l'organisateur est interdite.
+                            En cas de non-respect de ces règles, l'accès à l'événement pourra vous être refusé sans remboursement.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="card-footer text-center bg-light py-3">
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-primary btn-lg">
+                        Retour à l'accueil
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

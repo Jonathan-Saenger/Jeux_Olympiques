@@ -1,0 +1,92 @@
+﻿@model Jeux_Olympiques.Models.ShoppingCart
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-lg border-0 rounded">
+                <div class="card-header bg-primary text-white text-center py-4">
+                    <h2 class="card-title mb-0">Paiement - Jeux Olympiques</h2>
+                    <p class="lead">Finalisez votre commande pour les événements olympiques</p>
+                </div>
+                <div class="card-body p-5">
+                    <form asp-action="CompletePayment" method="post" class="needs-validation" novalidate>
+                        <div class="text-center mb-4">
+                            <i class="fas fa-credit-card fa-3x text-success"></i>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="cardName" class="form-label">Nom sur la carte</label>
+                            <input type="text" class="form-control form-control-lg" id="cardName" placeholder="Nom complet" required>
+                            <div class="invalid-feedback">
+                                Veuillez entrer le nom complet comme indiqué sur votre carte.
+                            </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="cardNumber" class="form-label">Numéro de carte</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control form-control-lg" id="cardNumber" placeholder="XXXX-XXXX-XXXX-XXXX" required pattern="\d{4}-\d{4}-\d{4}-\d{4}">
+                                <div class="invalid-feedback">
+                                    Veuillez entrer un numéro de carte valide au format XXXX-XXXX-XXXX-XXXX.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label for="expirationDate" class="form-label">Date d'expiration</label>
+                                <input type="text" class="form-control form-control-lg" id="expirationDate" placeholder="MM/YY" required pattern="\d{2}/\d{2}">
+                                <div class="invalid-feedback">
+                                    Veuillez entrer la date d'expiration au format MM/YY.
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label for="cvv" class="form-label">CVV</label>
+                                <input type="text" class="form-control form-control-lg" id="cvv" placeholder="123" required pattern="\d{3}">
+                                <div class="invalid-feedback">
+                                    Veuillez entrer le code CVV à 3 chiffres.
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-lg btn-block mt-4">
+                            <i class="fas fa-lock"></i> Finaliser le paiement
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+    const formatCardNumber = (e) => {
+        const input = e.target.value.replace(/\D/g, '').substring(0, 16);
+        e.target.value = input.match(/.{1,4}/g)?.join('-') || '';
+    };
+
+    const formatExpirationDate = (e) => {
+        const input = e.target.value.replace(/\D/g, '').substring(0, 4);
+        e.target.value = input.length >= 2 
+            ? `${input.substring(0, 2)}/${input.substring(2, 4)}` 
+            : input;
+    };
+
+    const validateForms = () => {
+        const forms = document.querySelectorAll('.needs-validation');
+        forms.forEach(form => {
+            form.addEventListener('submit', (event) => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            });
+        });
+    };
+
+    document.getElementById('cardNumber').addEventListener('input', formatCardNumber);
+    document.getElementById('expirationDate').addEventListener('input', formatExpirationDate);
+
+    validateForms();
+
+});
+</script>
