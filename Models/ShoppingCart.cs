@@ -114,7 +114,7 @@ namespace Jeux_Olympiques.Models
                              select (int?)cartItems.Quantity).Sum();
             return quantity ?? 0; //Retourner 0 si toutes les entrées sont nulles
         }
-        public decimal GetTotal() // Multiplier le prix de chaque album par sa quantité pour obtenir le total du panier.
+        public decimal GetTotal()
         {
             decimal? total = (from cartItems in _context?.Carts
                               where cartItems.CartId == ShoppingCartId
