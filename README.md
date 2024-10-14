@@ -11,16 +11,6 @@ Dans le dossier ***Annexes*** à la racine du projet, vous trouverez :
 * La manuel d'utilisation
 * Les rapports des tests unitaires
 
-L'ensemble des documents est également disponible dans le Trello.
-
-<h2> 🔗 Lien du projet </h2>
-
-Lien du site : https://jeuxolympiques.azurewebsites.net/ <br>
-
-Lien Github : https://github.com/Jonathan-Saenger/Jeux_Olympiques <br>
-
-Lien Trello : https://trello.com/invite/b/5e7pGNKe/ATTI18b48db20c5f03a11134fc5f7b9ce59343D55F40/jeux-olympiques-paris-2024 <br>
-
 <h2> 🛠 Pré-requis </h2>
 
 Avant de commencer, assurez-vous d'avoir installé les éléments suivants :
