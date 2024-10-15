@@ -1,4 +1,7 @@
 ﻿@model Jeux_Olympiques.Models.Ticket
+@{
+    Layout = "_Layout";
+}
 
 <div class="container py-5">
     <div class="row justify-content-center">
@@ -28,6 +31,10 @@
                     </ul>
 
                     <p class="text-center"><strong>Total payé : <span class="text-success">@Model.Price €</span></strong></p>
+
+                    <div class="text-center">
+                        <img src="data:image/png;base64,@Convert.ToBase64String(ViewBag.QRCodeImage)" alt="QR Code" class="img-fluid" />
+                    </div>
 
                     <div class="alert alert-warning mt-4" role="alert">
                         <small>

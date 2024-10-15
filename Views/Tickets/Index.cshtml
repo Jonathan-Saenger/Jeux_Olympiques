@@ -7,6 +7,32 @@
 <div class="container mt-5">
     <h1 class="mb-4 text-center">Statistiques de Ventes de Tickets</h1>
 
+    <h2> Tableaux récapitulatif des ventes </h2>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card bg-light">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total des ventes</h5>
+                    <p class="card-text display-4">
+                        @ViewBag.TotalVentes
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card bg-primary text-white">
+
+                <div class="card-body text-center">
+                    <h5 class="card-title">Montant total des ventes</h5>
+                    <p class="card-text display-4">
+                        @ViewBag.MontantTotal €
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2> Détails des ventes </h2>
     <div class="table-responsive">
         <table class="table table-striped table-hover table-bordered">
             <thead class="thead-light">
@@ -48,29 +74,5 @@
                 }
             </tbody>
         </table>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-md-6">
-            <div class="card bg-light">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Total des ventes</h5>
-                    <p class="card-text display-4">
-                        @ViewBag.TotalVentes 
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card bg-primary text-white">
-
-                <div class="card-body text-center">
-                    <h5 class="card-title">Montant total des ventes</h5>
-                    <p class="card-text display-4">
-                        @ViewBag.MontantTotal € 
-                    </p>
-                </div>
-            </div>
-        </div>
     </div>
 </div>

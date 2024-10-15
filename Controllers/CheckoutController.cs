@@ -11,6 +11,8 @@ using System;
 using System.Net.Sockets;
 using System.Security.Claims;
 using System.Text;
+using QRCoder;
+using System.Drawing;
 
 namespace Jeux_Olympiques.Controllers
 {
@@ -81,6 +83,7 @@ namespace Jeux_Olympiques.Controllers
                 .ThenInclude(td => td.Offer)
                 .ThenInclude(o => o.Events)
                 .Include(t => t.Buyer)
+                .Include(c => c.Contains)
                 .FirstOrDefault(t => t.TicketId == ticketId);
 
             if (ticket == null)
@@ -88,7 +91,22 @@ namespace Jeux_Olympiques.Controllers
                 return RedirectToAction("Index", "ShoppingCart");
             }
 
-            // Affichage du ticket 
+            var firstTicketDetail = ticket.TicketDetails.FirstOrDefault();
+
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode($@"Voici les donnees du Ticket de {ticket.Buyer.FirstName} {ticket.Buyer.LastName} :
+            Place: {firstTicketDetail.Offer?.Place},
+            Offre : {firstTicketDetail.Offer?.Description},
+            Prix: {ticket.Price},
+            Date: {ticket.TicketDate:yyyy/MM/dd HH:mm},
+            Email : {ticket.Buyer}
+            Cle Client: {ticket.Buyer.AccountKey},
+            Cle Ticket: {ticket.TicketKey},
+            Merci de bien verifier l'identite du detenteur du ticket",QRCodeGenerator.ECCLevel.Q);
+            PngByteQRCode qrCode = new PngByteQRCode(qrCodeData);
+            byte[] qrCodeImage = qrCode.GetGraphic(20);
+            ViewBag.QRCodeImage = qrCodeImage;
+
             return View(ticket);
         }
 
