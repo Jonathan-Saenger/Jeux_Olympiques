@@ -57,20 +57,50 @@ $(document).ready(() => {
 
 $(document).ready(() => {
     const formatCardNumber = (e) => {
-        const input = e.target.value.replace(/\D/g, '').substring(0, 16);
-        $(e.target).val(input.match(/.{1,4}/g)?.join('-') || '');
+        const input = e.target.value.replace(/\D/g, '').substring(0, 16); 
+        $(e.target).val(input.match(/.{1,4}/g)?.join('-') || ''); 
     };
 
     const formatExpirationDate = (e) => {
-        const input = e.target.value.replace(/\D/g, '').substring(0, 4);
-        $(e.target).val(input.length >= 2 ? `${input.substring(0, 2)}/${input.substring(2, 4)}` : input);
+        const input = e.target.value.replace(/\D/g, '').substring(0, 4); 
+        $(e.target).val(input.length >= 2 ? `${input.substring(0, 2)}/${input.substring(2, 4)}` : input);  
+    };
+
+    const validateExpirationDate = () => {
+        const expirationDateInput = $('#expirationDate').val();
+        const [inputMonth, inputYear] = expirationDateInput.split('/');
+
+        if (inputMonth && inputYear) {
+            const today = new Date();
+            const currentMonth = today.getMonth() + 1; 
+            const currentYear = today.getFullYear() % 100; 
+
+            const expMonth = parseInt(inputMonth, 10);
+            const expYear = parseInt(inputYear, 10);
+
+            if (expMonth < 1 || expMonth > 12) {
+                $('#expirationDate').removeClass('is-valid').addClass('is-invalid');
+                return false;
+            }
+
+            if (expYear > currentYear || (expYear === currentYear && expMonth >= currentMonth)) {
+                $('#expirationDate').removeClass('is-invalid').addClass('is-valid');
+                return true;
+            } else {
+                $('#expirationDate').removeClass('is-valid').addClass('is-invalid');
+                return false;
+            }
+        }
+        return false;
     };
 
     const validateForms = () => {
         const $forms = $('.needs-validation');
         $forms.each(function () {
             $(this).on('submit', (event) => {
-                if (!this.checkValidity()) {
+                const isExpirationValid = validateExpirationDate();
+
+                if (!this.checkValidity() || !isExpirationValid) {
                     event.preventDefault();
                     event.stopPropagation();
                 }
@@ -81,6 +111,7 @@ $(document).ready(() => {
 
     $('#cardNumber').on('input', formatCardNumber);
     $('#expirationDate').on('input', formatExpirationDate);
+    $('#expirationDate').on('blur', validateExpirationDate);
 
     validateForms();
 });

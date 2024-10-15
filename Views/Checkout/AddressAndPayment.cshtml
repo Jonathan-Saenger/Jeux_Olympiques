@@ -19,7 +19,7 @@
                         </div>
                         <div class="form-group mb-4">
                             <label for="cardName" class="form-label">Nom sur la carte</label>
-                            <input type="text" class="form-control form-control-lg" id="cardName" placeholder="Nom complet" required>
+                            <input type="text" class="form-control form-control-lg" id="cardName" placeholder="Nom complet" required pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s]+" title="Utilisez uniquement des lettres et des espaces">
                             <div class="invalid-feedback">
                                 Veuillez entrer le nom complet comme indiqué sur votre carte.
                             </div>
@@ -27,7 +27,7 @@
                         <div class="form-group mb-4">
                             <label for="cardNumber" class="form-label">Numéro de carte</label>
                             <div class="input-group">
-                                <input type="text" class="form-control form-control-lg" id="cardNumber" placeholder="XXXX-XXXX-XXXX-XXXX" required pattern="\d{4}-\d{4}-\d{4}-\d{4}">
+                                <input type="text" class="form-control form-control-lg" id="cardNumber" placeholder="XXXX-XXXX-XXXX-XXXX" required pattern="\d{4}-\d{4}-\d{4}-\d{4}" title="Format attendu : 16 chiffres séparés par des tirets (XXXX-XXXX-XXXX-XXXX)">
                                 <div class="invalid-feedback">
                                     Veuillez entrer un numéro de carte valide au format XXXX-XXXX-XXXX-XXXX.
                                 </div>
@@ -36,14 +36,14 @@
                         <div class="row">
                             <div class="col-md-6 mb-4">
                                 <label for="expirationDate" class="form-label">Date d'expiration</label>
-                                <input type="text" class="form-control form-control-lg" id="expirationDate" placeholder="MM/YY" required pattern="\d{2}/\d{2}">
+                                <input type="text" class="form-control form-control-lg" id="expirationDate" placeholder="MM/YY" required pattern="\d{2}/\d{2}" title="Format attendu : MM/YY avec des chiffres">
                                 <div class="invalid-feedback">
-                                    Veuillez entrer la date d'expiration au format MM/YY.
+                                    Veuillez entrer une date d'expiration valide.
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <label for="cvv" class="form-label">CVV</label>
-                                <input type="text" class="form-control form-control-lg" id="cvv" placeholder="123" required pattern="\d{3}">
+                                <input type="text" class="form-control form-control-lg" id="cvv" placeholder="123" required pattern="\d{3}" title="Entrez un CVV de 3 chiffres">
                                 <div class="invalid-feedback">
                                     Veuillez entrer le code CVV à 3 chiffres.
                                 </div>
