@@ -160,8 +160,8 @@ namespace Jeux_Olympiques.Controllers
             QRCodeData qrCodeData = qrGenerator.CreateQrCode($@"Voici les donnees du Ticket de {ticket.Buyer.FirstName} {ticket.Buyer.LastName} :
             Place: {firstTicketDetail.Offer?.Place},
             Offre : {firstTicketDetail.Offer?.Description},
-            Prix: {ticket.Price},
-            Date: {ticket.TicketDate:yyyy/MM/dd HH:mm},
+            Prix: {ticket.Price} €,
+            Date: {ticket.TicketDate:dd/MM/yyyy HH:mm},
             Email : {ticket.Buyer}
             Cle Client: {ticket.Buyer.AccountKey},
             Cle Ticket: {ticket.TicketKey},
