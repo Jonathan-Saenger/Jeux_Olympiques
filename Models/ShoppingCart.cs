@@ -9,8 +9,12 @@ using Microsoft.EntityFrameworkCore;
 namespace Jeux_Olympiques.Models
 {
     /// <summary>
-    /// Déclaration de la classe partielle ShoppingCart pour gérer le panier d'achat.
+    /// Classe partielle ShoppingCart pour gérer les opérations liées au panier d'achat.
     /// </summary>
+    /// <remarks>
+    /// Cette classe fournit des méthodes pour ajouter, supprimer et gérer les articles dans le panier.
+    /// Elle est aussi responsable de la gestion des sessions utilisateur, de la création des tickets, et du calcul du total du panier.
+    /// </remarks>
     public partial class ShoppingCart
     {
         private readonly ApplicationDbContext _context;
@@ -23,25 +27,29 @@ namespace Jeux_Olympiques.Models
         /// Clé constante pour identifier le panier dans la session.
         /// </summary>
         public const string CartSessionKey = "CartId";
+
+        /// <summary>
+        /// Récupère le panier d'achat associé à l'utilisateur actuel à partir de la base de donnée.
+        /// </summary>
         public static ShoppingCart GetCart(HttpContext context, ApplicationDbContext dbContext)
         {
             var cart = new ShoppingCart(dbContext);
             cart.ShoppingCartId = cart.GetCartId(context);
             return cart;
         }
-        /// <summary>
-        /// Méthode de simplification des appels du panier
-        /// </summary>
-        /// <param name="controller"></param>
-        /// <returns></returns>
+
         public static ShoppingCart GetCart(Controller controller, ApplicationDbContext dbContext)
         {
             return GetCart(controller.HttpContext, dbContext);
         }
         /// <summary>
-        /// Rechercher les instances du panier et de l'offre correspondante
+        /// Ajoute l'offre spécifiée au panier d'achat.
         /// </summary>
-        /// <param name="offer"></param>
+        /// <param name="offer">L'offre à ajouter au panier.</param>
+        /// <remarks>
+        /// Si l'offre existe déjà dans le panier, la quantité est incrémentée.
+        /// Si l'offre n'existe pas, un nouvel élément est créé dans le panier.
+        /// </remarks>
         public void AddToCart(Offer offer)
         {
             var cartItem = _context?.Carts?.SingleOrDefault(
@@ -50,7 +58,7 @@ namespace Jeux_Olympiques.Models
 
             if (cartItem == null)
             {
-                cartItem = new Cart //Créer un nouveau panier si ce dernier est vide
+                cartItem = new Cart
                 {
                     OfferId = offer.OfferId,
                     CartId = ShoppingCartId,
@@ -63,8 +71,17 @@ namespace Jeux_Olympiques.Models
             {
                 cartItem.Quantity++; //Si le panier est vide, ajouter une offre
             }
-            _context?.SaveChanges(); //Sauvegarder les changements
+            _context?.SaveChanges();
         }
+
+        /// <summary>
+        /// Suppression d'une offre du panier.
+        /// </summary>
+        /// <param name="id">Identifiant de l'élément à supprimer.</param>
+        /// <returns>La quantité restante de l'élément dans le panier, ou 0 si l'élément est supprimé.</returns>
+        /// <remarks>
+        /// Si la quantité de l'élément est supérieure à 1, celle-ci est décrémentée. Sinon, l'élément est supprimé du panier.
+        /// </remarks>
         public int RemoveFromCart(int id)
         {
             var cartItem = _context?.Carts?.Single(
@@ -84,10 +101,17 @@ namespace Jeux_Olympiques.Models
                 {
                     _context?.Carts?.Remove(cartItem);
                 }
-                _context?.SaveChanges(); //Sauvagarde des changements
+                _context?.SaveChanges();
             }
             return itemQuantity;
         }
+
+        /// <summary>
+        /// Vide le panier
+        /// </summary>
+        /// <remarks>
+        /// Cette méthode supprime tous les éléments du panier et sauvegarde les modifications dans la base de données.
+        /// </remarks>
         public void EmptyCart()
         {
             var cartItems = _context?.Carts?.Where(
@@ -97,8 +121,18 @@ namespace Jeux_Olympiques.Models
             {
                 _context?.Carts?.Remove(cartItem);
             }
-            _context?.SaveChanges(); //Sauvegarde des changements
+            _context?.SaveChanges();
         }
+
+
+        /// <summary>
+        /// Récupère tous les articles dans le panier actuel.
+        /// </summary>
+        /// <returns>Liste d'éléments de type <see cref="Cart"/> présents dans le panier.</returns>
+        /// <remarks>
+        /// Requête LINQ avec chargement anticipé (Eager Loading) pour inclure les offres et les événements 
+        /// associés à chaque élément du panier.
+        /// </remarks>
         public List<Cart> GetCartItems()
         {
             return _context.Carts
@@ -107,13 +141,29 @@ namespace Jeux_Olympiques.Models
                 .Where(c => c.CartId == ShoppingCartId)
                 .ToList();
         }
-        public int GetQuantity() //Récupérer la quantité de chaque item dans le panier
+
+        /// <summary>
+        /// Calcule le total d'articles dans le panier.
+        /// </summary>
+        /// <returns>Le nombre total d'articles dans le panier.</returns>
+        /// <remarks>
+        /// Si le panier est vide,  retourne 0.
+        /// </remarks>
+        public int GetQuantity()
         {
             int? quantity = (from cartItems in _context.Carts
                              where cartItems.CartId == ShoppingCartId
                              select (int?)cartItems.Quantity).Sum();
-            return quantity ?? 0; //Retourner 0 si toutes les entrées sont nulles
+            return quantity ?? 0; 
         }
+
+        /// <summary>
+        /// Prix total des articles dans le panier.
+        /// </summary>
+        /// <returns>Le prix total des articles dans le panier.</returns>
+        /// <remarks>
+        /// Si aucun article n'est présent dans le panier, cette méthode retourne 0.
+        /// </remarks>
         public decimal GetTotal()
         {
             decimal? total = (from cartItems in _context?.Carts
@@ -123,11 +173,19 @@ namespace Jeux_Olympiques.Models
 
             return total ?? decimal.Zero;
         }
+
+        /// <summary>
+        /// Crée un ticket (commande client)
+        /// </summary>
+        /// <returns>L'ID du ticket créé.</returns>
+        /// <remarks>
+        /// Cette méthode génère un ticket avec les détails du panier. Le panier ainsi que la vue partielle 
+        /// du ticket sont vidés après la création du ticket.
+        /// </remarks>
         public int CreateTicket(Ticket ticket)
         {
             decimal ticketTotal = 0;
 
-            //Sauvegarde du ticket
             _context.Tickets.Add(ticket);
             _context.SaveChanges(); 
 
@@ -141,20 +199,23 @@ namespace Jeux_Olympiques.Models
                     UnitPrice = item?.Offer?.Price ?? 0,
                     Count = item.Quantity
                 };
-                ticketTotal += item.Quantity * item.Offer.Price ?? 0; //Définir le total du panier
+                ticketTotal += item.Quantity * item.Offer.Price ?? 0;
 
-                _context.TicketDetails.Add(ticketDetail); // Ajout du ticketDetail dans la base de données
+                _context.TicketDetails.Add(ticketDetail);
             }
             ticket.Price = ticketTotal;
             _context.SaveChanges();
             EmptyCart();
-            return ticket.TicketId; // Renvoie le TicketId comme numéro de commande
+            return ticket.TicketId;
         }
+
         /// <summary>
-        /// On utilise HttpContext pour autoirser l'accès aux cookies
+        /// Récupère l'identifiant du panier depuis la session utilisateur.
         /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
+        /// <returns>L'ID du panier sous forme de chaîne de caractères.</returns>
+        /// <remarks>
+        /// Si l'ID du panier n'existe pas dans la session, un nouvel ID est généré et stocké.
+        /// </remarks>
         public string GetCartId(HttpContext context)
         {
             if (context.Session.GetString(CartSessionKey) == null)
@@ -171,6 +232,13 @@ namespace Jeux_Olympiques.Models
             }
             return context.Session.GetString(CartSessionKey);
         }
+
+        /// <summary>
+        /// Migre les articles du panier d'un visiteur vers un utilisateur authentifié.
+        /// </summary>
+        /// <remarks>
+        /// Cette méthode met à jour l'ID du panier pour qu'il soit associé à l'utilisateur inscrit après l'authetification.
+        /// </remarks>
         public void MigrateCart(string userName)
         {
             var shoppingCart = _context.Carts?.Where(

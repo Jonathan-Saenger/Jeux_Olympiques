@@ -67,18 +67,16 @@ namespace Jeux_Olympiques.Controllers
 
         // POST: Events/Create
         /// <summary>
-        /// Créer un nouvel événement.
+        /// Créer un nouvel événement dans la base de données.
         /// </summary>
         /// <param name="@event">L'objet Event contenant les informations à enregistrer.</param>
         /// <returns>
         /// Redirige vers l'index des événements si la création est réussie 
         /// </returns>
         /// <remarks>
-        /// Cette méthode est protégée contre les attaques de surpostage en liant uniquement 
-        /// les propriétés spécifiées de l'objet Event. L'utilisateur doit être authentifié 
-        /// avec le rôle "Admin". L'événement est ajouté au contexte et les modifications sont 
-        /// enregistrées. Sinon, la vue est renvoyée avec l'objet Event pour permettre 
-        /// à l'utilisateur de corriger les erreurs.
+        /// L'utilisateur doit être authentifié avec le rôle "Admin". L'événement est ajouté au 
+        /// contexte et les modifications sont enregistrées. Sinon, la vue est renvoyée avec l'objet 
+        /// Event pour permettre à l'utilisateur de corriger les erreurs.
         /// Référence de .NET, consultez : http://go.microsoft.com/fwlink/?LinkId=317598.
         /// </remarks>
         [HttpPost]
@@ -126,7 +124,7 @@ namespace Jeux_Olympiques.Controllers
 
         // POST: Events/Edit/5
         /// <summary>
-        /// Gère la requête POST pour mettre à jour un événement spécifique.
+        /// Met à jour un événement existant.
         /// </summary>
         /// <param name="id">L'identifiant de l'événement à éditer.</param>
         /// <param name="@event">L'objet Event contenant les informations mises à jour.</param>
@@ -136,10 +134,8 @@ namespace Jeux_Olympiques.Controllers
         /// </returns>
         /// <remarks>
         /// Cette méthode est protégée et nécessite également que l'utilisateur soit authentifié avec le rôle "Admin".
-        ///  Si l'identifiant fourni ne correspond pas à celui de l'événement dans le modèle, une réponse NotFound est renvoyée.
-        /// Si l'état du modèle est valide, la méthode tente de mettre à jour l'événement dans le contexte. En cas d'échec
-        ///  de la mise à jour due à une concurrence, elle vérifie si l'événement existe toujours. Si l'événement n'existe plus, 
-        /// une réponse NotFound est renvoyée, sinon une exception est relancée.
+        /// Si l'identifiant fourni ne correspond pas à celui de l'événement dans le modèle, une réponse NotFound est renvoyée.
+        /// Si l'état du modèle est valide, la mise à jour est effectuée dans la base de données. 
         /// Pour plus de détails sur la protection contre le surpostage, consultez : http://go.microsoft.com/fwlink/?LinkId=317598.
         /// </remarks>
         [HttpPost]
@@ -177,20 +173,16 @@ namespace Jeux_Olympiques.Controllers
 
         // GET: Events/Delete/5
         /// <summary>
-        /// Gère la requête GET pour afficher la page de confirmation de suppression d'un événement spécifique.
+        /// Affiche la page de confirmation de suppression d'un événement spécifique.
         /// </summary>
         /// <param name="id">L'identifiant de l'événement à supprimer.</param>
         /// <returns>
-        /// La vue de confirmation de suppression de l'événement, ou une réponse NotFound si l'événement n'existe pas.
+        /// Confirmation de suppression de l'événement, ou une réponse NotFound si l'événement n'existe pas.
         /// </returns>
         /// <remarks>
-        /// Cette méthode nécessite que l'utilisateur soit authentifié avec le rôle "Admin". 
-        /// Elle commence par vérifier si l'identifiant fourni est nul. Si c'est le cas, 
-        /// elle renvoie une réponse NotFound. Ensuite, elle tente de récupérer l'événement 
-        /// correspondant à l'identifiant à partir du contexte de la base de données.
-        /// Si l'événement est trouvé, la vue de confirmation de suppression est renvoyée. 
-        /// Sinon, une réponse NotFound est également renvoyée, indiquant que l'événement 
-        /// à supprimer n'existe pas.
+        /// Cette méthode nécessite que l'utilisateur soit authentifié avec le rôle "Admin". Recupère l'événement par
+        /// son ID à partir de la base de données. Si l'événement est trouvé, la vue de confirmation 
+        /// de suppression est renvoyée. Sinon, une réponse NotFound est renvoyée, indiquant que l'événement.
         /// </remarks>
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
@@ -212,21 +204,16 @@ namespace Jeux_Olympiques.Controllers
 
         // POST: Events/Delete/5
         /// <summary>
-        /// Gère la requête POST pour confirmer la suppression d'un événement spécifique.
+        /// Confirme la suppression d'un événement spécifique.
         /// </summary>
         /// <param name="id">L'identifiant de l'événement à supprimer.</param>
         /// <returns>
         /// L'index des événements après la suppression
         /// </returns>
         /// <remarks>
-        /// Cette méthode est protégée contre les attaques CSRF (Cross-Site Request Forgery) 
-        /// Elle nécessite également que l'utilisateur soit authentifié avec le rôle "Admin".
-        /// Elle tente d'abord de trouver l'événement correspondant à l'identifiant 
-        /// fourni. Si l'événement est trouvé, il est supprimé du contexte. 
-        /// Quoi qu'il en soit, après l'opération, les changements sont enregistrés 
-        /// dans la base de données. La méthode redirige ensuite vers l'index des 
-        /// événements, que la suppression ait été effectuée ou que l'événement 
-        /// n'ait pas été trouvé.
+        /// Cette méthode est protégée contre les attaques CSRF (Cross-Site Request Forgery).L'utilisateur 
+        /// doit authentifié avec le rôle "Admin".Si l'événement est trouvé, il est supprimé de la base de
+        /// données. La méthode redirige ensuite vers l'index des événements.
         /// </remarks>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

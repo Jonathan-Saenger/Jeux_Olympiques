@@ -3,7 +3,8 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
 
 namespace Jeux_Olympiques.Models
 {/// <summary>
-/// Les propriétés de ce User concerne l'Administrateur de l'application avec la possibilité de créer des évènements, des offres
+/// Les propriétés de ce User concerne l'Administrateur de l'application avec la possibilité de créer des évènements,
+/// des offres et d'accéder aux statistiques
 /// </summary>
     public class User: Jeux_OlympiquesUser
     {

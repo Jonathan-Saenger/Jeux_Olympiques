@@ -21,6 +21,17 @@ namespace Jeux_Olympiques.Controllers
         }
 
         // GET: Tickets
+        /// <summary>
+        /// Accès à la page statistiques réservée à l'Administrateur
+        /// </summary>
+        /// <remarks>
+        /// Cette méthode est uniquement accessible aux utilisateurs ayant le rôle "Admin". 
+        /// Elle affiche les ventes effectuées sur l'application avec les détails de la transaction. 
+        /// Elle calcule et affiche également le nombre total de ventes et le montant total des ventes.
+        /// </remarks>
+        /// <returns>
+        /// Retourne la vue avec la liste complète des tickets et les informations de statistiques (nombre total et montant des ventes).
+        /// </returns>
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {

@@ -19,6 +19,13 @@ namespace Jeux_Olympiques.Data
         public DbSet<Cart>? Carts { get; set; }
         public DbSet<TicketDetail> TicketDetails { get; set; }
 
+        /// <summary>
+        /// Configure le modèle de données et initialise les données de base pour l'application.
+        /// </summary>
+        /// <remarks>
+        /// Permet de configurer des entités spécifiques et y insérer des données initiales. 
+        /// </remarks>
+        /// <param name="modelBuilder">Le constructeur de modèle utilisé pour configurer les entités et leurs relations.</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
