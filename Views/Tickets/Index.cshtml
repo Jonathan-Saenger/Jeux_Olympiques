@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Statistiques de Ventes de Tickets";
+    var colors = new[] { "bg-success", "bg-info", "bg-warning", "bg-danger", "bg-primary" };
 }
 
     <h2>Tableaux récapitulatif des ventes</h2>
@@ -23,6 +24,25 @@
             </div>
         </div>
     </div>
+
+<h2>Statistiques par type d'offre</h2>
+<div class="row mt-4">
+    @{
+        int colorIndex = 0;
+    }
+    @foreach (var offre in ViewBag.VentesParOffre)
+    {
+        <div class="col-sm-4 mb-3">
+            <div class="card text-center @colors[colorIndex % colors.Length] text-white shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">@offre.Key</h5>
+                    <p class="display-4">@offre.Value</p>
+                </div>
+            </div>
+        </div>
+        colorIndex++;
+    }
+</div>
 
     <h2>Détails des ventes</h2>
     <div class="table-responsive">

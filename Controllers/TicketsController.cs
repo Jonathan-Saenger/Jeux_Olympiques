@@ -26,8 +26,9 @@ namespace Jeux_Olympiques.Controllers
         /// </summary>
         /// <remarks>
         /// Cette méthode est uniquement accessible aux utilisateurs ayant le rôle "Admin". 
-        /// Elle affiche les ventes effectuées sur l'application avec les détails de la transaction. 
-        /// Elle calcule et affiche également le nombre total de ventes et le montant total des ventes.
+        /// Elle affiche les ventes effectuées sur l'application avec les détails de la transaction.
+        /// Elle calcule et affiche le nombre total de ventes et le montant total des ventes.
+        /// Elle calcule également le nombre total de vente par offre.
         /// </remarks>
         /// <returns>
         /// Retourne la vue avec la liste complète des tickets et les informations de statistiques (nombre total et montant des ventes).
@@ -44,7 +45,14 @@ namespace Jeux_Olympiques.Controllers
             ViewBag.TotalVentes = tickets.Count(); 
             ViewBag.MontantTotal = tickets.Sum(t => t.Price ?? 0);
 
-            return View(await _context.Tickets.ToListAsync());
+            var ventesParOffre = tickets
+                .SelectMany(t => t.TicketDetails.Select(td => td.Offer.Title))
+                .GroupBy(title => title)
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            ViewBag.VentesParOffre = ventesParOffre;
+
+            return View(tickets);
         }
 
         // GET: Tickets/Details/5
