@@ -7,15 +7,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace Jeux_Olympiques.Areas.Identity.Pages.Account
 {
     /// <summary>
-    ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-    ///     directly from your code. This API may change or be removed in future releases.
+    /// Renvoi un message d'erreur si un utilisateur n'est pas autorisé à accéder à un espace dédié
+    /// ATTENTION : Il s'agit d'une API par défaut d'ASP.NET CORE Identity que nous avons repris pour personnaliser
+    /// un message d'accès. Cette dernière est amené à évoluer en fonction des futures mise à jour
     /// </summary>
     public class AccessDeniedModel : PageModel
     {
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public void OnGet()
         {
         }

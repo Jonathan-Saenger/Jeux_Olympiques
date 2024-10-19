@@ -17,6 +17,7 @@ using Jeux_Olympiques.Areas.Identity.Data;
 
 namespace Jeux_Olympiques.Areas.Identity.Pages.Account
 {
+
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<Jeux_OlympiquesUser> _userManager;
@@ -28,28 +29,27 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
             _emailSender = emailSender;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required]
             [EmailAddress]
             public string Email { get; set; }
         }
 
+        /// <summary>
+        /// Méthode appelée lors de la soumission du formulaire. Si les données sont valides, elle tente de trouver 
+        /// l'utilisateur correspondant à l'adresse email fournie et, si l'email est confirmé, génère un jeton de 
+        /// réinitialisation de mot de passe. Ensuite, elle envoie un email via l'API de Sendgrid à l'utilisateur 
+        /// contenant un lien pour réinitialiser son mot de passe. 
+        /// SECURITE : Redirige vers la page de confirmation si l'email existe et est confirmé, sans révéler les informations 
+        /// de l'utilisateur. Si l'email n'existe pas ou n'est pas confirmé, la même redirection est effectuée 
+        /// pour ne pas compromettre la sécurité.
+        /// ATTENTION : Il s'agit d'une API par défaut d'ASP.NET CORE Identity que nous avons repris pour la personnaliser.
+        /// Cette dernière est amené à évoluer en fonction des futures mise à jour
+        /// </summary>
         public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)

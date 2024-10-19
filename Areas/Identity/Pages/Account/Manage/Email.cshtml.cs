@@ -16,12 +16,26 @@ using Jeux_Olympiques.Areas.Identity.Data;
 
 namespace Jeux_Olympiques.Areas.Identity.Pages.Account.Manage
 {
+    /// <summary>
+    /// Modèle de page permettant aux utilisateurs de consulter et de mettre à jour leur adresse email.
+    /// Gère également l'envoi des liens de confirmation pour la modification et la vérification des emails
+    /// via l'API de Sendgrid.
+    /// SECURITE sur tous les champs de saisies pour éviter les piratages.
+    /// ATTENTION : Il s'agit d'une API par défaut d'ASP.NET CORE Identity que nous avons repris pour personnaliser
+    /// l'utilisateur. Cette dernière est amené à évoluer en fonction des futures mise à jour
+    /// </summary>
     public class EmailModel : PageModel
     {
         private readonly UserManager<Jeux_OlympiquesUser> _userManager;
         private readonly SignInManager<Jeux_OlympiquesUser> _signInManager;
         private readonly IEmailSender _emailSender;
 
+        /// <summary>
+        /// Constructeur du modèle de la page email, rôle des injections : 
+        /// </summary>
+        /// <param name="userManager">Gestionnaire des utilisateurs ASP.NET Core Identity.</param>
+        /// <param name="signInManager">Gestionnaire de la connexion des utilisateurs.</param>
+        /// <param name="emailSender">Service d'envoi d'emails.</param>
         public EmailModel(
             UserManager<Jeux_OlympiquesUser> userManager,
             SignInManager<Jeux_OlympiquesUser> signInManager,
@@ -32,45 +46,20 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account.Manage
             _emailSender = emailSender;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public string Email { get; set; }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public bool IsEmailConfirmed { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [TempData]
         public string StatusMessage { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required]
             [EmailAddress]
-            [Display(Name = "New email")]
+            [Display(Name = "Nouvelle adresse email")]
             public string NewEmail { get; set; }
         }
 
@@ -99,6 +88,12 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
+        /// <summary>
+        /// Gère la soumission du formulaire pour changer l'adresse email de l'utilisateur.
+        /// Si la nouvelle adresse email est différente de l'ancienne, un email de confirmation est envoyé
+        /// via l'API de Sendgrid
+        /// </summary>
+        /// <returns>Redirige vers la page actuelle avec un message d'état après soumission.</returns>
         public async Task<IActionResult> OnPostChangeEmailAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -126,17 +121,21 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account.Manage
                     protocol: Request.Scheme);
                 await _emailSender.SendEmailAsync(
                     Input.NewEmail,
-                    "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    "Confirmez votre adresse email",
+                    $"Veuillez confirmer votre compte en <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>cliquant ici</a>.");
 
-                StatusMessage = "Confirmation link to change email sent. Please check your email.";
+                StatusMessage = "Le lien de confirmation pour changer l'email a été envoyé. Veuillez vérifier votre email.";
                 return RedirectToPage();
             }
 
-            StatusMessage = "Your email is unchanged.";
+            StatusMessage = "Votre email n'a pas été modifié.";
             return RedirectToPage();
         }
 
+        /// <summary>
+        /// Gère la soumission du formulaire pour renvoyer un email de vérification.
+        /// </summary>
+        /// <returns>Redirige vers la page actuelle après l'envoi de l'email de vérification.</returns>
         public async Task<IActionResult> OnPostSendVerificationEmailAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -162,8 +161,8 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account.Manage
                 protocol: Request.Scheme);
             await _emailSender.SendEmailAsync(
                 email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                "Confirmez votre adresse email",
+                $"Veuillez confirmer votre compte en <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>cliquant ici</a>.");
 
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();

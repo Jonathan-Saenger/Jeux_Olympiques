@@ -26,6 +26,15 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
         private readonly ILogger<LoginModel> _logger;
         private ApplicationDbContext _context;
 
+        /// <summary>
+        /// Constructeur de la classe LoginModel qui gère la connexion de l'utilisateur.
+        /// SECURITE : des contraintes de saisies côté client ont été imposé
+        /// ATTENTION : il s'agit d'une API par défaut d'ASP.NET CORE Identity que nous avons repris pour personnaliser
+        /// le login de l'utilisateur. Cette dernière est amené à évoluer en fonction des futures mise à jour
+        /// </summary>
+        /// <param name="signInManager">Gestionnaire de connexion</param>
+        /// <param name="logger">Service de journalisation</param>
+        /// <param name="context">Contexte de la base de données de l'application</param>
         public LoginModel(SignInManager<Jeux_OlympiquesUser> signInManager, ILogger<LoginModel> logger, ApplicationDbContext context)
         {
             _signInManager = signInManager;
@@ -33,58 +42,27 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
             _context = context;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public string ReturnUrl { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [TempData]
         public string ErrorMessage { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
+
             [Required]
             [EmailAddress]
             public string Email { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Display(Name = "Se souvenir de moi")]
             public bool RememberMe { get; set; }
         }
@@ -108,7 +86,7 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
         /// <summary>
         /// Récupération du panier dans le compte de l'utilisateur connecté
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="userName">Nom d'utilisateur (email) de l'utilisateur connecté</param>
         private void MigrateShoppingCart(string userName)
         {
             var cart = ShoppingCart.GetCart(HttpContext, _context);

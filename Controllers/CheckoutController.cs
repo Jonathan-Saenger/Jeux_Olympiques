@@ -29,7 +29,7 @@ namespace Jeux_Olympiques.Controllers
         //
         // GET: /Checkout/AddressAndPayment
         /// <summary>
-        /// Gère la requête GET pour afficher la page d'adresse et de paiement.
+        /// Affiche la page d'adresse et de paiement.
         /// </summary>
         /// <returns>
         /// La vue de la page d'adresse et de paiement ou  redirection vers la page du panier si vide.

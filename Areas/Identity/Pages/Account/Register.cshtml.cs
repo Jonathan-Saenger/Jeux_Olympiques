@@ -23,6 +23,16 @@ using Jeux_Olympiques.Data;
 
 namespace Jeux_Olympiques.Areas.Identity.Pages.Account
 {
+    /// <summary>
+    /// Modèle de page pour l'inscription des utilisateurs dans l'application. 
+    /// Cette classe gère le processus d'inscription, y compris la validation des informations saisies,
+    /// la création du compte utilisateur, la génération d'une clé unique, la migration du panier d'achat,
+    /// et l'envoi d'un email de confirmation.
+    /// SECURITE : PAGE CRITIQUE SECURITE. Les contraintes de validation sur les champs de saisis ont été
+    /// renforcé. 
+    /// ATTENTION : Il s'agit d'une API par défaut d'ASP.NET CORE Identity que nous avons repris pour personnaliser
+    /// toute l'inscription de l'utilisateur. Cette dernière est amenée à évoluer en fonction des futures mise à jour
+    /// </summary>
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<Jeux_OlympiquesUser> _signInManager;
@@ -50,92 +60,75 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
             _context = context;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public string ReturnUrl { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
         /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
+        /// Modèle d'entrée pour les informations d'inscription de l'utilisateur. SECURITE renforcée avec des
+        /// contraintes de validation importantes. 
         /// </summary>
         public class InputModel
         {
             //Ajouts personnalisés
-            [Required]
+            [Required(ErrorMessage = "Le prénom est requis.")]
             [DataType(DataType.Text)]
             [RegularExpression(@"^[A-ZÀ-ÿ]+[a-zA-ZÀ-ÿ\s]*$", ErrorMessage = "Veuillez utiliser uniquement des lettres")]
             [StringLength(100, ErrorMessage = "Le {0} doit comporter au moins {2} caractères et au maximum {1} caractères.", MinimumLength = 1)]
             [Display(Name = "Prénom")]
             public string FirstName { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Le nom est requis.")]
             [DataType(DataType.Text)]
             [RegularExpression(@"^[A-ZÀ-ÿ]+[a-zA-ZÀ-ÿ\s]*$", ErrorMessage = "Veuillez utiliser uniquement des lettres")]
             [StringLength(100, ErrorMessage = "Le {0} doit comporter au moins {2} caractères et au maximum {1} caractères.", MinimumLength = 1)]
             [Display(Name = "Nom")]
             public string LastName { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "L'adresse email est requise.")]
+            [EmailAddress(ErrorMessage = "L'adresse email saisie n'est pas valide.")]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
-            [Required]
+            [Required(ErrorMessage = "Le mot de passe est requis.")]
             [StringLength(100, ErrorMessage = "Le {0} doit comporter au moins {2} caractères et au maximum {1} caractères.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Mot de passe")]
             public string Password { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "Vos deux mots de passe doivent être identiques")]
+            [Display(Name = "Confirmer le mot de passe")]
+            [Compare("Password", ErrorMessage = "Les deux mots de passe doivent être identiques")]
             public string ConfirmPassword { get; set; }
         }
         
-
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
+
+        /// <summary>
+        /// Migre le panier d'achat de la session vers le compte utilisateur nouvellement créé.
+        /// </summary>
+        /// <param name="userName">Nom d'utilisateur (email) du nouvel utilisateur</param>
         private void MigrateShoppingCart(string userName)
         {
             var cart = ShoppingCart.GetCart(HttpContext, _context);
             cart.MigrateCart(userName);
             HttpContext.Session.SetString(ShoppingCart.CartSessionKey, userName);
         }
+
         /// <summary>
-        /// Dans cet API : Création de la clé unique, récupération du panier utilisateur, envoi de l'email de validation avec Sendmail
+        /// Gère la soumission du formulaire d'inscription.
+        /// Crée un nouvel utilisateur, génère une clé unique, migre le panier d'achat,
+        /// et envoie un email de confirmation.
         /// </summary>
-        /// <param name="returnUrl"></param>
-        /// <returns></returns>
+        /// <param name="returnUrl">URL de retour après inscription</param>
+        /// <returns>Résultat de l'action d'inscription</returns>
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
@@ -157,7 +150,7 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("L'utilisteur a créé un nouveau compte avec mot de passe.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -169,7 +162,7 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
                         protocol: Request.Scheme);
 
                     await _emailSender.SendEmailAsync(Input.Email, "[JEUX OLYMPIQUES] Validation de votre inscription",
-                        $"Bonjour, <br><br> Merci de vous êtes inscrit. Pour activer votre compte, veuillez vous rendre sur ce lien : <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>cliquez ici</a>.");
+                        $"Bonjour, <br><br> Merci pour votre inscription! Pour activer votre compte, veuillez vous rendre sur ce lien : <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>cliquez ici</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
@@ -191,6 +184,11 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
             return Page();
         }
 
+        /// <summary>
+        /// Crée une nouvelle instance de l'utilisateur Jeux_OlympiquesUser.
+        /// </summary>
+        /// <returns>Une nouvelle instance de Jeux_OlympiquesUser</returns>
+        /// <exception cref="InvalidOperationException">Levée si la création de l'instance échoue</exception>
         private Jeux_OlympiquesUser CreateUser()
         {
             try

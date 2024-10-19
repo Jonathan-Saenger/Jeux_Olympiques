@@ -13,6 +13,13 @@ using Jeux_Olympiques.Areas.Identity.Data;
 
 namespace Jeux_Olympiques.Areas.Identity.Pages.Account.Manage
 {
+    /// <summary>
+    /// Modèle de page permettant à un utilisateur de changer son mot de passe.
+    /// Ce modèle gère la récupération et la validation des informations liées au mot de passe,
+    /// et effectue les opérations de modification à l'aide du gestionnaire des utilisateurs (UserManager).
+    /// ATTENTION : Il s'agit d'une API par défaut d'ASP.NET CORE Identity que nous avons repris pour personnaliser
+    /// le changement de mot de passe. Cette dernière est amené à évoluer en fonction des futures mise à jour
+    /// </summary>
     public class ChangePasswordModel : PageModel
     {
         private readonly UserManager<Jeux_OlympiquesUser> _userManager;
@@ -29,52 +36,32 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account.Manage
             _logger = logger;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [TempData]
         public string StatusMessage { get; set; }
 
         /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
+        /// Classe contenant les champs requis pour le formulaire de changement de mot de passe.
+        /// ATTENTION SECURITE : contraintes renforcées pour éviter les piratages de comptes
         /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required]
             [DataType(DataType.Password)]
-            [Display(Name = "Current password")]
+            [Display(Name = "Mot de passe actuel")]
             public string OldPassword { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "le {0} doit contenir au moins {2} caractères et au maximum {1} caractère.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "New password")]
+            [Display(Name = "Nouveau mot de passe")]
             public string NewPassword { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [Display(Name = "Confirmer le nouveau mot de passe")]
+            [Compare("NewPassword", ErrorMessage = "Le nouveau mot de passe et la confirmation ne correspondent pas.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -119,8 +106,8 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            _logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "Your password has been changed.";
+            _logger.LogInformation("L'utilisateur a changé son mot de passe avec succès.");
+            StatusMessage = "Votre mot de passe a été changé.";
 
             return RedirectToPage();
         }
