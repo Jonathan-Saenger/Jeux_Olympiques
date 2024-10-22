@@ -22,7 +22,7 @@ Avant de commencer, assurez-vous d'avoir installé les éléments suivants :
 
 <h2>📥 Installation  </h2>
 
-<h3> Avec Visual Studio : </h3>
+<h3> Avec Visual Studio (recommandé): </h3>
 
 1. Ouvrez Visual Studio
 2. Cliquez sur <b>Cloner un référentiel</b>
@@ -119,6 +119,65 @@ dans votre base de données lors de la mise à jour de cette dernière. </p>
 Pour le test, vous pouvez créer votre propre compte Utilisateur. Conformément à la demande du client, il n'est pas possible 
 de créer un compte Admin. 
 
+<h2>🧪 Intégration et exécution des tests unitaires</h2>
 
+Des tests unitaires sont disponibles dans un dépôt dédié. Vous pouvez les cloner et les exécuter localement pour valider le bon fonctionnement de l'application.
+
+### 📂 1. Clonage du Dépôt des Tests Unitaires
+Le dépôt des tests unitaires est disponible ici :  
+➡️ **[JeuxOlympiquesUnitTests - GitHub Repository](https://github.com/Jonathan-Saenger/JeuxOlympiquesUnitTests)**  
+
+Clonez le dépôt à l'aide de la commande suivante :
+
+```
+git clone https://github.com/Jonathan-Saenger/JeuxOlympiquesUnitTests.git
+```
+
+### 🧑‍💻 2. Exécution des Tests dans Visual Studio
+
+1. <b> Ajouter le projet de tests à la solution :</b>
+    - Ouvrez la solution Jeux Olympiques dans Visual Studio.
+    - Cliquez avec le bouton droit sur la solution dans l'<b>Explorateur de solutions</b> et sélectionnez :
+<b>Ajouter > Projet existant...</b>
+    - Sélectionnez le fichier ```JeuxOlympiquesUnitTests.csproj``` situé dans le dossier où vous avez cloné le dépôt des tests.
+
+2. <b>Ajouter une référence au projet principal :</b>
+    - Cliquez avec le bouton droit sur le projet <b>JeuxOlympiquesUnitTests</b> dans l'Explorateur de solutions.
+    - Sélectionnez <b>Ajouter > Référence...</b> et cochez la case correspondant au projet <b>Jeux Olympiques</b>.
+
+3. <b>Exécuter les tests unitaires :</b>
+    - Allez dans le menu Tests > Exécuter tous les tests.
+    - Les résultats des tests s'afficheront dans l'Explorateur de tests de Visual Studio.
+
+
+### 💻 3. Exécution des tests unitaires dans Visual Studio Code
+
+1. <b>Ouvrir le projet de tests dans VS Code :</b>
+    - Une fois le dépôt cloné, entrez dans le répertoire du projet de tests unitaires et ouvrez-le dans VS Code :
+
+```
+cd JeuxOlympiquesUnitTests
+code .
+```
+  
+2. <b> Restaurer les dépendances : </b>
+- Avant d'exécuter les tests, vous devez restaurer les dépendances avec la commande suivante :
+```
+dotnet restore
+```
+
+3. <b> Exécutez les tests unitaires : </b>
+
+```
+dotnet test
+```
+Les résultats des tests apparaîtront dans le terminal, vous indiquant quels tests ont réussi ou échoué.
+
+### 🎯 4. Analyse des Résultats des Tests
+Les résultats des tests peuvent être :
+
+- 🟢 Réussis : Tous les tests sont passés sans erreur.
+- 🔴 Échoués : Certains tests ont échoué, les détails de l'erreur vous seront fournis dans le terminal ou l'Explorateur de tests.
+Si des tests échouent, assurez-vous de vérifier les dépendances et la configuration de votre environnement.
 
 Excellente navigation dans l'application !
