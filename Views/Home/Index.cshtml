@@ -1,4 +1,10 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using Jeux_Olympiques.Areas.Identity.Data;
+@inject SignInManager<Jeux_OlympiquesUser> SignInManager
+@inject UserManager<Jeux_OlympiquesUser> UserManager
+@model IEnumerable<Jeux_Olympiques.Models.Event>
+
+@{
     ViewData["Title"] = "Accueil Jeux Olympique 2024";
 }
 
@@ -62,26 +68,19 @@
 </div>
 
 <div class="container">
+@foreach (var item in Model) {
+<div class="container my-5">
     <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
         <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-            <h2 class="display-4 fw-bold lh-1 text-body-emphasis">Tir à l'arc</h2>
-            <p class="lead fw-bolder fs-3">8ème dez finale du Tir à l'arc homme</p>
-            <p class="lead fw-bold">11 octobre 2024</p>
-            <p class="lead">Pelouse du Stade de Vincenne</p>
+            <h2 class="display-4 fw-bold lh-1 text-body-emphasis">@Html.DisplayFor(modelItem => item.Entitled)</h2>
+                <p class="lead fw-bolder fs-3">@Html.DisplayFor(modelItem => item.Presentation)</p>
+                <p class="lead fw-bold">@(item.Date.HasValue ? item.Date.Value.ToString("dd MMM yyyy, HH:mm") : "Date non spécifiée")</p>
+                <p class="lead">@Html.DisplayFor(modelItem => item.Site)</p>
         </div>
         <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden text-center pb-3">
-            <a class="btn btn-primary btn-lg px-4 me-md-2 fw-bold" asp-controller="Events" asp-action="Index" asp-action="Details">Réserver</a>
+                <a class="btn btn-primary btn-lg px-4 me-md-2 fw-bold" asp-controller="Events" asp-action="Index">Accéder à la billetterie</a>
         </div>
     </div>
-    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
-        <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-            <h2 class="display-4 fw-bold lh-1 text-body-emphasis">Natation</h2>
-            <p class="lead fw-bolder fs-3">Quart de finale de Natation Femme 500 mètres</p>
-            <p class="lead fw-bold">12 octobre 2024</p>
-            <p class="lead">Piscine du Parc des Princes</p>
-        </div>
-        <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden text-center pb-3">
-            <a class="btn btn-primary btn-lg px-4 me-md-2 fw-bold" asp-controller="Events" asp-action="Index" asp-action="Details">Réserver</a>
-        </div>
-    </div>
+</div>
+}
 </div>
