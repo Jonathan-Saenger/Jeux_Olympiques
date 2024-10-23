@@ -9,7 +9,6 @@ Bonjour et bienvenue dans le projet de billetterie pour les Jeux Olympiques 2024
 Dans le dossier ***Annexes*** à la racine du projet, vous trouverez : 
 * La documentation technique 
 * La manuel d'utilisation
-* Les rapports des tests unitaires
 
 <h2> 🛠 Pré-requis </h2>
 

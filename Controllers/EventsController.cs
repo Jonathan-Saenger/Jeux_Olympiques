@@ -23,7 +23,11 @@ namespace Jeux_Olympiques.Controllers
         /// GET: Events
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Events.ToListAsync());
+            var events = await _context.Events
+                .OrderByDescending(e => e.Date)
+                .ToListAsync();
+
+            return View(events);
         }
 
         // GET: Events/Details/5
