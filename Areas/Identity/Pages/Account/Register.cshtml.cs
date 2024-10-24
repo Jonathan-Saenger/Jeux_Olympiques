@@ -103,6 +103,10 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
             [Display(Name = "Confirmer le mot de passe")]
             [Compare("Password", ErrorMessage = "Les deux mots de passe doivent être identiques")]
             public string ConfirmPassword { get; set; }
+
+            [Required(ErrorMessage = "Veuillez cocher la case 'Je ne suis pas un robot'.")]
+            [Display(Name = "Je ne suis pas un robot")]
+            public bool IsNotARobot { get; set; }
         }
         
         public async Task OnGetAsync(string returnUrl = null)
@@ -133,6 +137,12 @@ namespace Jeux_Olympiques.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            
+            if (!Input.IsNotARobot)
+            {
+                ModelState.AddModelError("Input.IsNotARobot", "Veuillez cocher la case 'Je ne suis pas un robot'.");
+            }
+
             if (ModelState.IsValid)
             {
                 var user = CreateUser();

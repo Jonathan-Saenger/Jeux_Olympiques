@@ -37,6 +37,18 @@
                 <label asp-for="Input.ConfirmPassword">Confirm Password</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+
+            <div class="p-3 mb-3 bg-light text-center" style="border: 5px solid; border-image: linear-gradient(90deg, blue, white, red) 1;">
+                <div class="form-check form-switch d-flex align-items-center justify-content-center">
+                    <input class="form-check-input me-2" type="checkbox" id="NotARobot" asp-for="Input.IsNotARobot" style="transform: scale(1.5);">
+                    <label class="form-check-label px-3 d-flex align-items-center" for="NotARobot">
+                        <strong>Je ne suis pas un robot</strong>
+                        <i class="bi bi-robot me-2 px-3"></i>
+                    </label>
+                </div>
+                <span asp-validation-for="Input.IsNotARobot" class="text-danger"></span>
+            </div>
+
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">S'inscrire</button>
         </form>
     </div>
